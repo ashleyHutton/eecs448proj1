@@ -3,14 +3,14 @@ public class Time {
 	private int minute;
 	private int second;
 	
-	public time()
+	public Time()
 	{
 		hour = 0;
 		minute = 0;
 		second = 0;
 	}
 
-	public time(int hour, int minute, int second)
+	public Time(int hour, int minute, int second)
 	{
 		this.hour = hour;
 		this.minute = minute;
