@@ -3,10 +3,12 @@
 public class Clock{
 	
 	private Time displayTime;
+	boolean isMilitary;
 	
-	public Clock(){
+	public Clock(bool isMilitary){
 		
 		displayTime = new Time();
+		this.isMilitary = isMilitary;
 		
 	}
 	
@@ -15,9 +17,9 @@ public class Clock{
 		
 		while(true){
 			
-			String hours;
-			String minutes;
-			String seconds;
+			String hours = (String)displayTime.getHour();
+			String minutes = (String)displayTime.getMinute();
+			String seconds = (String)displayTime.getSecond();
 			
 			if(displayTime.getHour() < 10){
 				hours = new String("0"+displayTime.getHours());
@@ -42,8 +44,10 @@ public class Clock{
 		
 	}
 	
+	private 
 	
 	
+}	
 	
 	
 	
