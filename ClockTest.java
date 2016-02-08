@@ -8,7 +8,7 @@ public class ClockTest{
 		int i = 0;
 		
 		while(true){
-			
+			System.out.print("\033[H\033[2J");
 			System.out.println(i);
 			try{
 				Thread.sleep(1000);
@@ -17,6 +17,7 @@ public class ClockTest{
 				Thread.currentThread().interrupt();
 			}
 			i++;
+			
 			
 		}
 		
