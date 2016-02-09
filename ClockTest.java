@@ -9,7 +9,7 @@ public class ClockTest{
 		
 		while(true){
 			
-			bool isMilitary = false;
+			boolean isMilitary = false;
 			
 			Scanner input = new Scanner(System.in);
 			
@@ -103,7 +103,7 @@ public class ClockTest{
 		}
 	}
 	
-	public static int setHours(bool isMilitary){
+	public static int setHours(boolean isMilitary){
 		int maxHours = isMilitary ? 24 : 12;
 		
 		System.out.print("Set the hours: ");
@@ -112,6 +112,7 @@ public class ClockTest{
 		int hours = hoursInput.nextInt();
 		
 		if(((hours == 0 && isMilitary == false)||(hours <0)) && hours < maxHours){
+			System.out.print("Invalid entry.  Input the hours: ");
 			hours = hoursInput.nextInt();
 		}
 		return hours;
@@ -123,7 +124,8 @@ public class ClockTest{
 		Scanner minutesInput = new Scanner(System.in);
 		int minutes = minutesInput.nextInt();
 		
-		if(minutes > 0 && minutes < 60){
+		if(minutes < 0 && minutes < 60){
+			System.out.print("Invalid entry.  Input the minutes: ");
 			minutes = minutesInput.nextInt();
 		}
 		return minutes;
@@ -135,7 +137,8 @@ public class ClockTest{
 		Scanner secondsInput = new Scanner(System.in);
 		int seconds = secondsInput.nextInt();
 		
-		if(seconds > 0 && seconds < 60){
+		if(seconds < 0 && seconds < 60){
+			System.out.print("Invalid entry.  Input the seconds: ");
 			seconds = secondsInput.nextInt();
 		}
 		

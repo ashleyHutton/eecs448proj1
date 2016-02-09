@@ -10,7 +10,7 @@ public class Time {
 		second = 0;
 	}
 
-	public Time(int hour, int minute, int second)  //@pre Have to pass in three ints. @post Creates a Time object whose variable values are set to the three passed in ints. @return None
+	public Time(boolean isMilitary, int hour, int minute, int second)  //@pre Have to pass in three ints. @post Creates a Time object whose variable values are set to the three passed in ints. @return None
 	{
 		this.hour = hour;
 		this.minute = minute;
@@ -33,11 +33,11 @@ public class Time {
 		this.minute = minute;
 	}
 
-	public int getsecond() {  //@pre None @post None @return Returns the value for the variable "second". 
+	public int getSecond() {  //@pre None @post None @return Returns the value for the variable "second". 
 		return second;
 	}
 
-	public void setsecond(int second) {  //@pre  Have to pass in an int @post Sets the variable "second" to the passed in value @return None
+	public void setSecond(int second) {  //@pre  Have to pass in an int @post Sets the variable "second" to the passed in value @return None
 		this.second = second;
 	}
 	public void updateSeconds()  //@pre None @post Updates the value for the variable "second". Takes into consideration that the numbers restart from 59 to 0. @return None 

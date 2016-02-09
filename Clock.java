@@ -31,6 +31,7 @@ public class Clock{
 				hours = new String("0"+displayTime.getSecond());
 			}
 			*/
+			System.out.print("\033[H\033[2J");
 			System.out.println(displayTime.getHour()+":"+displayTime.getMinute()+":"+displayTime.getSecond());
 			try{
 					Thread.sleep(1000);
@@ -39,7 +40,7 @@ public class Clock{
 				Thread.currentThread().interrupt();
 			}
 			
-			System.out.print("\033[H\033[2J");
+			
 		}	
 	}
 }	
