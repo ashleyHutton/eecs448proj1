@@ -47,7 +47,7 @@ public class Clock{
 			catch(InterruptedException ex){
 				Thread.currentThread().interrupt();
 			}
-			displayTime.updateTime(isMilitary);
+			displayTime.updateTime();
 			
 		}	
 	}

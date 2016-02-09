@@ -2,6 +2,7 @@ public class Time {
 	private int hour;
 	private int minute;
 	private int second;
+	private boolean isMilitary;
 	
 	public Time()  //@pre None @post Creates a Time object with defalut values of 0 for the variables hour, minute, and second. @return None
 	{
@@ -12,6 +13,7 @@ public class Time {
 
 	public Time(boolean isMilitary, int hour, int minute, int second)  //@pre Have to pass in three ints. @post Creates a Time object whose variable values are set to the three passed in ints. @return None
 	{
+		this.isMilitary = isMilitary;
 		this.hour = hour;
 		this.minute = minute;
 		this.second = second;
@@ -45,7 +47,7 @@ public class Time {
 		if (second == 59)
 		{
 			second = 0;
-			minute++;
+			updateMinutes();
 		}
 		else 
 		{
@@ -58,7 +60,7 @@ public class Time {
 		if (minute == 59)
 		{
 			minute = 0;
-			hour++;
+			updateHours();
 		}
 		else
 		{
@@ -66,7 +68,7 @@ public class Time {
 		}
 	}
 
-	public void updateHours(boolean isMilitary)  //@pre Have to pass in an boolean to determine the updates for the hour @post Updates the value for the variable "hour". Takes into consideration that the numbers restart from 12 to 1 for the 12 hour clock, and from 23 to 0 for the 24 hour clock. @return None
+	public void updateHours()  //@pre Have to pass in an boolean to determine the updates for the hour @post Updates the value for the variable "hour". Takes into consideration that the numbers restart from 12 to 1 for the 12 hour clock, and from 23 to 0 for the 24 hour clock. @return None
 	{
 		if (!isMilitary)
 		{
@@ -92,10 +94,9 @@ public class Time {
 		}
 	}
 	
-	public void updateTime(boolean isMilitary){
+	public void updateTime(){
 		updateSeconds();
-		updateMinutes();
-		updateHours(isMilitary);
+		
 		
 	}
 }
