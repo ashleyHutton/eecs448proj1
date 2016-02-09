@@ -16,23 +16,36 @@ public class Clock{
 		
 		
 		while(true){
-			/*
-			String hours = (String)displayTime.getHour();
-			String minutes = (String)displayTime.getMinute();
-			String seconds = (String)displayTime.getSecond();
 			
-			if(displayTime.getHour() < 10){
-				hours = new String("0"+displayTime.getHour());
-			}
-			if(displayTime.getMinute() < 10){
-				hours = new String("0"+displayTime.getMinute());
-			}
-			if(displayTime.getSecond() < 10){
-				hours = new String("0"+displayTime.getSecond());
-			}
-			*/
+			String hours;
+			String minutes;
+			String seconds;
+			
+			
 			System.out.print("\033[H\033[2J");
-			System.out.println(displayTime.getHour()+":"+displayTime.getMinute()+":"+displayTime.getSecond());
+			
+			if(displayTime.getHour() < 10 && displayTime.getMinute() < 10 && displayTime.getSecond() >= 10){
+				System.out.println(0+displayTime.getHour()+":"+0+displayTime.getMinute()+":"+displayTime.getSecond());
+			}
+			else if(displayTime.getHour() < 10 && displayTime.getMinute() >= 10 && displayTime.getSecond() < 10){
+				System.out.println(0+displayTime.getHour()+":"+displayTime.getMinute()+":"+0+displayTime.getSecond());
+			}
+			else if(displayTime.getHour() >= 10 && displayTime.getMinute() < 10 && displayTime.getSecond() < 10){
+				System.out.println(displayTime.getHour()+":"+0+displayTime.getMinute()+":"+0+displayTime.getSecond());
+			}
+			else if(displayTime.getHour() >= 10 && displayTime.getMinute() >= 10 && displayTime.getSecond() < 10){
+				System.out.println(displayTime.getHour()+":"+displayTime.getMinute()+":"+0+displayTime.getSecond());
+			}
+			else if(displayTime.getHour() >= 10 && displayTime.getMinute() < 10 && displayTime.getSecond() >= 10){
+				System.out.println(displayTime.getHour()+":"+0+displayTime.getMinute()+":"+displayTime.getSecond());
+			}
+			else if(displayTime.getHour() < 10 && displayTime.getMinute() >= 10 && displayTime.getSecond() >= 10){
+				System.out.println(0+displayTime.getHour()+":"+displayTime.getMinute()+":"+displayTime.getSecond());
+			}
+			else{
+				System.out.println("0"+displayTime.getHour()+":"+0+displayTime.getMinute()+":"+0+displayTime.getSecond());
+			}
+		
 			try{
 					Thread.sleep(1000);
 			}
