@@ -18,16 +18,21 @@ public class ClockTest{
 			System.out.println("----------");
 			isMilitary = setFormat();
 			
+			
+			//Initialize clock
 			Clock myClock = new Clock(isMilitary);
-			myClock.setHour(setHours());
+			myClock.setHour(setHours(isMilitary));
 			myClock.setMinute(setMinutes());
 			myClock.setSecond(setSeconds());
 			
+			//run clock
+			myClock.updateTime();
 			
 			
 			
 			
 			
+			/**
 			String option = optionInput.next();
 			
 			switch(option){
@@ -47,10 +52,11 @@ public class ClockTest{
 				default:
 					System.out.println("Invalid");
 					break;
+				*/
 			}
 		}
 	}
-	
+	/** Doesn't work in this context
 	protected static void printMenu(){
 		System.out.println("Clock Menu:");
 		System.out.println("Type \"a\" to set the time");
@@ -59,7 +65,8 @@ public class ClockTest{
 		System.out.println("Type \"d\" to launch\n");
 		System.out.print("Select one option: ");
 	}
-	
+	*/
+	/** I have all the set methods returning ints now with validation happening within the methods
 	protected static void setTime(){
 		while(!setFormat()){
 			System.out.println("Invalid");
@@ -77,6 +84,7 @@ public class ClockTest{
 			System.out.println("Invalid");
 		}
 	}
+		*/
 	
 	public static boolean setFormat(){
 		System.out.print("Would you like 24 hours clock (y/n)?  If you do not type a \"y\", we will default to 12 hours: ");
@@ -92,19 +100,18 @@ public class ClockTest{
 		}
 	}
 	
-	public static int setHours(){
-		int maxHours = m_isMilitary ? 24 : 12;
+	public static int setHours(bool isMilitary){
+		int maxHours = isMilitary ? 24 : 12;
 		
 		System.out.print("Set the hours: ");
 		
 		Scanner hoursInput = new Scanner(System.in);
 		int hours = hoursInput.nextInt();
 		
-		if(hours > 0 && hours < maxHours){
-			m_hours = hours;
-			return true;
+		if(((hours == 0 && isMilitary == false)||(hours <0)) && hours < maxHours){
+			hours = hoursInput.nextInt();
 		}
-		return false;
+		return hours;
 	}
 	
 	public static int setMinutes(){
@@ -114,10 +121,9 @@ public class ClockTest{
 		int minutes = minutesInput.nextInt();
 		
 		if(minutes > 0 && minutes < 60){
-			m_minutes = minutes;
-			return true;
+			minutes = minutesInput.nextInt();
 		}
-		return false;
+		rreturn minutes;
 	}
 	
 	public static int setSeconds(){
@@ -127,14 +133,19 @@ public class ClockTest{
 		int seconds = secondsInput.nextInt();
 		
 		if(seconds > 0 && seconds < 60){
-			m_seconds = seconds;
-			return true;
+			seconds = secondsInput.nextInt();
 		}
-		return false;
+		
+		return seconds;
 	}
 	
+	
+	
+	
+/**	These instance variables aren't really useful in the context of a multiclass program
 	protected static int m_hours = 24;
 	protected static int m_minutes = 60;
 	protected static int m_seconds = 60;
 	protected static boolean m_isMilitary = false;
+*/
 }
