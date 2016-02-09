@@ -5,9 +5,9 @@ public class Clock{
 	private Time displayTime;
 	boolean isMilitary;
 	
-	public Clock(bool isMilitary){
+	public Clock(bool isMilitary,int hours, int minutes, int seconds){
 		
-		displayTime = new Time();
+		displayTime = new Time(isMilitary,hours,minutes,seconds);
 		this.isMilitary = isMilitary;
 		
 	}
@@ -45,7 +45,15 @@ public class Clock{
 		
 		
 	}
-	
+	public void setHour(int hour){
+		displayTime.setHour(hour);
+	}
+	public void setMinute(int minute){
+		displayTime.setMinute(minute);
+	}
+	public void setSecond(int second){
+		displayTime.setSecond(second);
+	}
 }	
 	
 	

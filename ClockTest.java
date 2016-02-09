@@ -20,13 +20,16 @@ public class ClockTest{
 			
 			
 			//Initialize clock
-			Clock myClock = new Clock(isMilitary);
-			myClock.setHour(setHours(isMilitary));
-			myClock.setMinute(setMinutes());
-			myClock.setSecond(setSeconds());
+			
+			
+			int hours = setHours(isMilitary);
+			int minutes = setMinutes();
+			int seconds = setSeconds()
+			
+			Clock myClock = new Clock(isMilitary,hours,minutes,seconds);
 			
 			//run clock
-			myClock.updateTime();
+			myClock.displayClock;
 			
 			
 			
