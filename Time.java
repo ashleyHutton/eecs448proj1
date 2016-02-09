@@ -45,6 +45,7 @@ public class Time {
 		if (second == 59)
 		{
 			second = 0;
+			minute++;
 		}
 		else 
 		{
@@ -57,6 +58,7 @@ public class Time {
 		if (minute == 59)
 		{
 			minute = 0;
+			hour++;
 		}
 		else
 		{
@@ -64,9 +66,9 @@ public class Time {
 		}
 	}
 
-	public void updateHours(int type)  //@pre Have to pass in an int to determine the updates for the hour @post Updates the value for the variable "hour". Takes into consideration that the numbers restart from 12 to 1 for the 12 hour clock, and from 23 to 0 for the 24 hour clock. @return None
+	public void updateHours(boolean isMilitary)  //@pre Have to pass in an boolean to determine the updates for the hour @post Updates the value for the variable "hour". Takes into consideration that the numbers restart from 12 to 1 for the 12 hour clock, and from 23 to 0 for the 24 hour clock. @return None
 	{
-		if (type == 12)
+		if (!isMilitary)
 		{
 			if (hour == 12)
 			{
@@ -77,7 +79,7 @@ public class Time {
 				hour++;
 			}
 		}
-		if (type == 24)
+		if (isMilitary)
 		{
 			if (hour == 23)
 			{
@@ -88,5 +90,12 @@ public class Time {
 				hour++;
 			}
 		}
+	}
+	
+	public void updateTime(boolean isMilitary){
+		updateSeconds();
+		updateMinutes();
+		updateHours(isMilitary);
+		
 	}
 }
