@@ -9,11 +9,25 @@ public class ClockTest{
 		
 		
 		while(true){
-			System.out.print("\033[H\033[2J");
 			
-			printMenu();
+			bool isMilitary = false;
 			
-			Scanner optionInput = new Scanner(System.in);
+			Scanner input = new Scanner(System.in);
+			
+			System.out.println("Clock Menu");
+			System.out.println("----------");
+			isMilitary = setFormat();
+			
+			Clock myClock = new Clock(isMilitary);
+			myClock.setHour(setHours());
+			myClock.setMinute(setMinutes());
+			myClock.setSecond(setSeconds());
+			
+			
+			
+			
+			
+			
 			String option = optionInput.next();
 			
 			switch(option){
@@ -38,7 +52,7 @@ public class ClockTest{
 	}
 	
 	protected static void printMenu(){
-		System.out.println("Clock Menu:\n");
+		System.out.println("Clock Menu:");
 		System.out.println("Type \"a\" to set the time");
 		System.out.println("Type \"b\" to set the format to 12 hours");
 		System.out.println("Type \"c\" to set the format to 24 hours");
@@ -64,25 +78,21 @@ public class ClockTest{
 		}
 	}
 	
-	protected static boolean setFormat(){
-		System.out.print("Would you like 24 hours clock (y/n)? ");
+	public static boolean setFormat(){
+		System.out.print("Would you like 24 hours clock (y/n)?  If you do not type a \"y\", we will default to 12 hours: ");
 		
 		Scanner formatInput = new Scanner(System.in);
 		String format = formatInput.next();
 		
 		switch(format){
 			case "y":
-				m_isMilitary = true;
-				return true;
-			case "n":
-				m_isMilitary = false;
 				return true;
 			default:
 				return false;
 		}
 	}
 	
-	protected static boolean setHours(){
+	public static int setHours(){
 		int maxHours = m_isMilitary ? 24 : 12;
 		
 		System.out.print("Set the hours: ");
@@ -97,7 +107,7 @@ public class ClockTest{
 		return false;
 	}
 	
-	protected static boolean setMinutes(){
+	public static int setMinutes(){
 		System.out.print("Set the minutes: ");
 		
 		Scanner minutesInput = new Scanner(System.in);
@@ -110,7 +120,7 @@ public class ClockTest{
 		return false;
 	}
 	
-	protected static boolean setSeconds(){
+	public static int setSeconds(){
 		System.out.print("Set the seconds: ");
 		
 		Scanner secondsInput = new Scanner(System.in);
