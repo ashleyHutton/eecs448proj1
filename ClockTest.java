@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class ClockTest{
 	
-	
 	public static void main(String[] args){
 		
 		
@@ -24,12 +23,12 @@ public class ClockTest{
 			
 			int hours = setHours(isMilitary);
 			int minutes = setMinutes();
-			int seconds = setSeconds()
+			int seconds = setSeconds();
 			
 			Clock myClock = new Clock(isMilitary,hours,minutes,seconds);
 			
 			//run clock
-			myClock.displayClock;
+			myClock.displayClock();
 			
 			
 			
@@ -55,9 +54,10 @@ public class ClockTest{
 				default:
 					System.out.println("Invalid");
 					break;
-				*/
-			}
+				
+			}*/
 		}
+				
 	}
 	/** Doesn't work in this context
 	protected static void printMenu(){
@@ -126,7 +126,7 @@ public class ClockTest{
 		if(minutes > 0 && minutes < 60){
 			minutes = minutesInput.nextInt();
 		}
-		rreturn minutes;
+		return minutes;
 	}
 	
 	public static int setSeconds(){
