@@ -38,6 +38,8 @@ public class Clock{
 			catch(InterruptedException ex){
 				Thread.currentThread().interrupt();
 			}
+			
+			System.out.print("\033[H\033[2J");
 		}
 		
 		
