@@ -37,8 +37,11 @@ public class Clock{
 			else if(displayTime.getHour() < 10 && displayTime.getMinute() >= 10 && displayTime.getSecond() >= 10){
 				System.out.println("0"+displayTime.getHour()+":"+displayTime.getMinute()+":"+displayTime.getSecond());
 			}
+			else if(displayTime.getHour() >= 10 && displayTime.getMinute() >= 10 && displayTime.getSecond() >= 10){
+				System.out.println(displayTime.getHour()+":"+displayTime.getMinute()+":"+displayTime.getSecond());
+			}
 			else{
-				System.out.println("0"+displayTime.getHour()+":"+0+displayTime.getMinute()+":"+0+displayTime.getSecond());
+				System.out.println("0"+displayTime.getHour()+":"+"0"+displayTime.getMinute()+":"+"0"+displayTime.getSecond());
 			}
 		
 			try{
