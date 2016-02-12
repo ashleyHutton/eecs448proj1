@@ -1,3 +1,10 @@
+/*************************************************************************
+* @file: Time.java
+* @author: Richard Aviles
+* @date: 2/10/16
+* @brief: Implementation file for Time class
+**************************************************************************/
+
 private class Time {
 	
 	
@@ -96,7 +103,7 @@ private class Time {
 		}
 	}
 	
-	public void updateTime(){
+	public void updateTime(){  //@pre None @post Calls the updateSeconds method to update the time. @return None
 		updateSeconds();
 		
 		
