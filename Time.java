@@ -1,6 +1,6 @@
 /*************************************************************************
 * @file: Time.java
-* @author: Richard Aviles
+* @author: Richard Aviles and Jinuk Park
 * @date: 2/10/16
 * @brief: Implementation file for Time class
 **************************************************************************/
