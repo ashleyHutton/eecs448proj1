@@ -114,7 +114,7 @@ public class ClockTest{
 		Scanner secondsInput = new Scanner(System.in);
 		int seconds = secondsInput.nextInt();
 		
-		while(seconds < 0 && seconds > 59){
+		while(seconds < 0 || seconds > 59){
 			System.out.print("Invalid entry.  Input the seconds: ");
 			seconds = secondsInput.nextInt();
 		}
