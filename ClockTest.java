@@ -77,7 +77,7 @@ public class ClockTest{
 		Scanner hoursInput = new Scanner(System.in);
 		int hours = hoursInput.nextInt();
 		
-		while((hours <1 || hours > maxHours) || (hours == 0 && isMilitary == false)){
+		while((hours < 0 || hours > maxHours) || (hours == 0 && isMilitary == false)){
 			System.out.print("Invalid entry.  Input the hours: ");
 			hours = hoursInput.nextInt();
 		}
