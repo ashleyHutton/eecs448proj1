@@ -1,8 +1,19 @@
-
+/**
+* @file Time.java
+* @author Francinaldo de Almeida Pereira
+* @date 2/10/16
+* @brief Implementation file for Time class
+*/
 
 import java.util.Scanner;
 
 public class ClockTest{
+	
+	/**
+	* @pre none
+	* @post Driver for Clock class
+	* @return void
+	*/
 	
 	public static void main(String[] args){
 		
@@ -29,65 +40,16 @@ public class ClockTest{
 			
 			//run clock
 			myClock.displayClock();
-			
-			
-			
-			
-			
-			/**
-			String option = optionInput.next();
-			
-			switch(option){
-				case "a":
-					System.out.println("a selected");
-					setTime();
-					break;
-				case "b":
-					System.out.println("b selected");
-					break;
-				case "c":
-					System.out.println("c selected");
-					break;
-				case "d":
-					System.out.println("d selected");
-					break;
-				default:
-					System.out.println("Invalid");
-					break;
-				
-			}*/
+		
 		}
 				
 	}
-	/** Doesn't work in this context
-	protected static void printMenu(){
-		System.out.println("Clock Menu:");
-		System.out.println("Type \"a\" to set the time");
-		System.out.println("Type \"b\" to set the format to 12 hours");
-		System.out.println("Type \"c\" to set the format to 24 hours");
-		System.out.println("Type \"d\" to launch\n");
-		System.out.print("Select one option: ");
-	}
+	
+	/**
+	* @pre None
+	* @post Determine if user wants military time
+	* @return boolean
 	*/
-	/** I have all the set methods returning ints now with validation happening within the methods
-	protected static void setTime(){
-		while(!setFormat()){
-			System.out.println("Invalid");
-		}
-		
-		while(!setHours()){
-			System.out.println("Invalid");
-		}
-		
-		while(!setMinutes()){
-			System.out.println("Invalid");
-		}
-		
-		while(!setSeconds()){
-			System.out.println("Invalid");
-		}
-	}
-		*/
 	
 	public static boolean setFormat(){
 		System.out.print("Would you like 24 hours clock (y/n)?  If you do not type a \"y\", we will default to 12 hours: ");
@@ -102,7 +64,11 @@ public class ClockTest{
 				return false;
 		}
 	}
-	
+	/**
+	* @pre valid boolean
+	* @post Receives hours valid for specific type of clock (12- or 24-hour)
+	* @return int
+	*/
 	public static int setHours(boolean isMilitary){
 		int maxHours = isMilitary ? 23 : 12;
 		
@@ -118,6 +84,12 @@ public class ClockTest{
 		return hours;
 	}
 	
+	/**
+	* @pre  None
+	* @post Receives minutes from user and validates to ensure valid minutes
+	* @return int
+	*/
+		
 	public static int setMinutes(){
 		System.out.print("Set the minutes: ");
 		
@@ -131,6 +103,11 @@ public class ClockTest{
 		return minutes;
 	}
 	
+	/**
+	* @pre  None
+	* @post Receives seconds from user, determines validity.
+	* @return int
+	*/
 	public static int setSeconds(){
 		System.out.print("Set the seconds: ");
 		
@@ -144,14 +121,4 @@ public class ClockTest{
 		
 		return seconds;
 	}
-	
-	
-	
-	
-/**	These instance variables aren't really useful in the context of a multiclass program
-	protected static int m_hours = 24;
-	protected static int m_minutes = 60;
-	protected static int m_seconds = 60;
-	protected static boolean m_isMilitary = false;
-*/
 }
