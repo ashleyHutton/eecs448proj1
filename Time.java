@@ -5,8 +5,7 @@
 * @brief: Implementation file for Time class
 **************************************************************************/
 
-private class Time {
-	
+public class Time {
 	
 	private int hour;
 	private int minute;
