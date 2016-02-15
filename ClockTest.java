@@ -6,7 +6,7 @@
 */
 
 import java.util.Scanner;
-
+import java.util.InputMismatchException;
 public class ClockTest{
 	
 	/**
@@ -59,6 +59,7 @@ public class ClockTest{
 		
 		switch(format){
 			case "y":
+			case "Y":
 				return true;
 			default:
 				return false;
@@ -75,7 +76,15 @@ public class ClockTest{
 		System.out.print("Set the hours: ");
 		
 		Scanner hoursInput = new Scanner(System.in);
-		int hours = hoursInput.nextInt();
+		int hours = -1;
+		do{
+		try {
+			System.out.println("Please input an integer");
+			hours = hoursInput.nextInt();
+		} catch (InputMismatchException exception) {
+			System.out.println("This is not an integer");
+		}
+		}while(hours != (int)hours);
 		
 		while((hours < 0 || hours > maxHours) || ((hours < 1 || 12 < hours)&& isMilitary == false)){
 			System.out.print("Invalid entry.  Input the hours: ");
