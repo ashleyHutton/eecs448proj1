@@ -13,7 +13,16 @@ public class Clock{
 
 	private JFrame f;
 	private JPanel p;
-	private JButton b1;
+
+	private JButton changeTime;
+	private JButton stopWatch;
+	private JButton timer;
+	private JButton clearScreen;
+	private JButton changeDate;
+	private JButton zoomIn;
+	private JButton zoomOut;
+
+	private JLabel clockTime;
 
 	public Clock(){
 
@@ -33,20 +42,77 @@ public class Clock{
 		p = new JPanel();
 		p.setBackground(Color.WHITE);
 
-		// Create button and button action
-		b1 = new JButton("Start Clock");
-		b1.addActionListener(new ActionListener(){
+		clockTime = new JLabel("Hey. Here's our Label.");
+
+		// Create buttons and button action
+		changeTime = new JButton("Change Time");
+		stopWatch = new JButton("Stopwatch");
+		timer = new JButton("Timer");
+		clearScreen = new JButton("Clear Screen");
+		changeDate = new JButton("Change Date");
+		zoomIn = new JButton("Zoom In");
+		zoomOut = new JButton("Zoom Out");
+
+		changeTime.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showInputDialog("Enter the time:");
+			}
+		});
+		stopWatch.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showInputDialog(null, "working!");
+			}
+		});		
+		timer.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
 				JOptionPane.showMessageDialog(null, "working!");
-
 			}
+		});		
+		clearScreen.addActionListener(new ActionListener(){
 
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showMessageDialog(null, "working!");
+			}
+		});		
+		changeDate.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showInputDialog("Enter the Date:");
+			}
+		});
+		zoomIn.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showMessageDialog(null, "working!");
+			}
+		});
+		zoomOut.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+
+				JOptionPane.showMessageDialog(null, "working!");
+			}
 		});
 
 		// add button to panel
-		p.add(b1);
+		p.add(changeTime);
+		p.add(stopWatch);
+		p.add(timer);
+		p.add(clearScreen);
+		p.add(changeDate);
+		p.add(zoomIn);
+		p.add(zoomOut);
+
+		p.add(clockTime);
 
 		// add panel to the frame
 		f.add(p);
