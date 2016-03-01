@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Clock{
 
 	private JFrame f;
@@ -65,7 +68,33 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showInputDialog("Enter the time:");
+				String userTime = JOptionPane.showInputDialog("Enter the time:");
+
+				/** regular expression looking for the format "##:##:## AM/PM in 12hr */
+			    String timePattern_12hr = "(^[1-9]|1[0-2]):([0-5][0-9]):([0-5][0-9])[ ]?(?i)(am|pm)$";
+			    /** regular expression looking for the format "##:##:## in 24hr */
+			    String timePattern_24hr = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+
+			    // Create a Pattern object
+			    Pattern r = Pattern.compile(timePattern_24hr);
+
+			      // Now create matcher object.
+			    Matcher m = r.matcher(userTime);
+
+			    int m_hour = m.group(1);
+			    int m_minute = m.group(2);
+			    int m_second = m.group(3);
+
+		    	if (m.find( )) {
+		        	System.out.println("Found value: " + m.group(0) );
+		        	System.out.println("Found value: " + m.group(1) );
+		        	System.out.println("Found value: " + m.group(2) );
+		       		System.out.println("Found value: " + m.group(3) );
+
+		      	}
+		        else {
+		        	System.out.println("NO MATCH");
+				}
 			}
 		});
 		stopWatch.addActionListener(new ActionListener(){
