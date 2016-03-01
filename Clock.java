@@ -8,11 +8,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Calendar;
 
 public class Clock{
 
 	private JFrame f;
 	private JPanel p;
+	JTextField timeF;
+
 
 	private JButton changeTime;
 	private JButton stopWatch;
@@ -42,6 +45,11 @@ public class Clock{
 		p = new JPanel();
 		p.setBackground(Color.WHITE);
 
+		// Create clock text field
+		timeF = new JTextField(10);
+		timeF.setEditable(false);
+		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+
 		clockTime = new JLabel("Hey. Here's our Label.");
 
 		// Create buttons and button action
@@ -66,21 +74,21 @@ public class Clock{
 
 				JOptionPane.showInputDialog(null, "working!");
 			}
-		});		
+		});
 		timer.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
 				JOptionPane.showMessageDialog(null, "working!");
 			}
-		});		
+		});
 		clearScreen.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
 				JOptionPane.showMessageDialog(null, "working!");
 			}
-		});		
+		});
 		changeDate.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
@@ -111,13 +119,32 @@ public class Clock{
 		p.add(changeDate);
 		p.add(zoomIn);
 		p.add(zoomOut);
+		p.add(timeF);
 
 		p.add(clockTime);
 
 		// add panel to the frame
 		f.add(p);
 
+		// Initialize timer
+		Timer t = new Timer(1000, new Listener());
+		t.start();
+
 	}
+
+	class Listener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+				Calendar currentTime = Calendar.getInstance();
+
+				// set hours, minutes, second to user specified time
+				int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+				int minute = currentTime.get(Calendar.MINUTE);
+				int second = currentTime.get(Calendar.SECOND);
+
+				// print time to Screen
+				timeF.setText(hour+":"+minute+":"+second);
+			}
+		}
 
 
 	public static void main(String[] args){
