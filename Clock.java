@@ -30,6 +30,10 @@ public class Clock{
 
 	private JLabel clockTime;
 
+	private int m_hour = 0;
+	private int m_minute = 0;
+	private int m_second = 0;
+
 	public Clock(){
 
 		gui();
@@ -81,9 +85,9 @@ public class Clock{
 			      // Now create matcher object.
 			    Matcher m = r.matcher(userTime);
 
-			    int m_hour = Integer.parseInt(m.group(1));
-			    int m_minute = Integer.parseInt(m.group(2));
-			    int m_second = Integer.parseInt(m.group(3));
+			    m_hour = Integer.parseInt(m.group(1));
+			    m_minute = Integer.parseInt(m.group(2));
+			    m_second = Integer.parseInt(m.group(3));
 
 		    	if (m.find( )) {
 		        	System.out.println("Found value: " + m.group(0) );
