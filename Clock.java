@@ -34,6 +34,9 @@ public class Clock{
 	private int m_minute = 0;
 	private int m_second = 0;
 
+	private int m_month = 1;
+	private int m_day = 3;
+
 	public Clock(){
 
 		gui();
@@ -128,7 +131,33 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showInputDialog("Enter the Date:");
+				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
+
+				// regular expression to find the date in the format MM/DD
+				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
+
+				// Create a Pattern object
+			    Pattern r = Pattern.compile(datePattern);
+
+			    // Now create matcher object.
+			    Matcher m = r.matcher(userDate);
+
+			    if (m.find()){
+
+			    	System.out.println(m.group(0));
+			    	System.out.println(m.group(1));
+			    	System.out.println(m.group(2));
+
+			    	// set the month and day to the given input
+			    	m_month = Integer.parseInt(m.group(1));
+			    	m_day = Integer.parseInt(m.group(2));
+
+			    }
+
+			    else{
+
+			    	System.out.println("No match");
+			    }
 			}
 		});
 		zoomIn.addActionListener(new ActionListener(){
