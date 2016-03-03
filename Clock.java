@@ -92,6 +92,7 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
+		       		// save hour minute and second as integers
 		       		m_hour = Integer.parseInt(m.group(1));
 				    m_minute = Integer.parseInt(m.group(2));
 				    m_second = Integer.parseInt(m.group(3));
