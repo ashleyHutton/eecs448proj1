@@ -1,6 +1,6 @@
 /**
 * @file: Clock.java
-* @author: Dravid Joseph
+* @author: Ashley Hutton, Hannah Johnson, and Rabel Marte
 * @date: 2/10/16
 * @brief: Implementation file for Clock class
 */
@@ -18,6 +18,7 @@ public class Clock{
 	private JFrame f;
 	private JPanel p;
 	JTextField timeF;
+	JTextField timeS;
 
 
 	private JButton changeTime;
@@ -29,7 +30,9 @@ public class Clock{
 	private JButton zoomOut;
 
 	private JLabel clockTime;
-	public Time testClock = new Time();
+	public Time timeClock = new Time();
+	public Time stopwatch = new Time();
+	public Time timerClock = new Time();
 
 	private int m_month = 1;
 	private int m_day = 3;
@@ -56,6 +59,10 @@ public class Clock{
 		timeF = new JTextField(10);
 		timeF.setEditable(false);
 		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+
+		timeS = new JTextField(10);
+		timeS.setEditable(false);
+		timeS.setFont(new Font("Arial", Font.PLAIN, 30));
 
 		clockTime = new JLabel("Hey. Here's our Label.");
 
@@ -92,20 +99,29 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
-							testClock.setSecond(Integer.parseInt(m.group(3)));
-							testClock.setMinute(Integer.parseInt(m.group(2)));
-							testClock.setHour(Integer.parseInt(m.group(1)));
+							timeClock.setSecond(Integer.parseInt(m.group(3)));
+							timeClock.setMinute(Integer.parseInt(m.group(2)));
+							timeClock.setHour(Integer.parseInt(m.group(1)));
 		      	}
 		        else {
 		        	System.out.println("NO MATCH");
 				}
 			}
 		});
+
 		stopWatch.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showInputDialog(null, "working!");
+				stopwatch.setSecond(0);
+				stopwatch.setMinute(0);
+				stopwatch.setHour(0);
+
+				stopwatch.updateSeconds();
+
+					timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+
+				//JOptionPane.showInputDialog(null, "working!");
 			}
 		});
 		timer.addActionListener(new ActionListener(){
@@ -179,6 +195,7 @@ public class Clock{
 		p.add(zoomIn);
 		p.add(zoomOut);
 		p.add(timeF);
+		p.add(timeS);
 
 		p.add(clockTime);
 
@@ -189,16 +206,28 @@ public class Clock{
 		Timer t = new Timer(1000, new Listener());
 		t.start();
 
+		Timer sw = new Timer(1000, new stopwatchListener());
+		sw.start();
+
+	}
+
+
+	class stopwatchListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			stopwatch.updateSeconds();
+			timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+		}
+
 	}
 
 	class Listener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 
-				testClock.updateSeconds();
+				timeClock.updateSeconds();
 
 				// print time to Screen
-				timeF.setText(testClock.getHour() + ":" + testClock.getMinute() + ":" + testClock.getSecond());
+				timeS.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 			}
 		}
 
