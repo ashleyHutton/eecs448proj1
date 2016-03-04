@@ -206,8 +206,8 @@ public class Clock{
 		Timer t = new Timer(1000, new Listener());
 		t.start();
 
-		Timer sw = new Timer(1000, new stopwatchListener());
-		sw.start();
+		//Timer sw = new Timer(1000, new stopwatchListener());
+		//sw.start();
 
 	}
 
@@ -227,7 +227,7 @@ public class Clock{
 				timeClock.updateSeconds();
 
 				// print time to Screen
-			//	timeS.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
+				timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 			}
 		}
 
