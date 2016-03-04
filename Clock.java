@@ -29,10 +29,7 @@ public class Clock{
 	private JButton zoomOut;
 
 	private JLabel clockTime;
-
-	private int m_hour = 0;
-	private int m_minute = 0;
-	private int m_second = 0;
+	public Time testClock = new Time();
 
 	public Clock(){
 
@@ -93,10 +90,9 @@ public class Clock{
 		       		System.out.println("Found value: " + m.group(3) );
 
 		       		// save hour minute and second as integers
-		       		m_hour = Integer.parseInt(m.group(1));
-				    m_minute = Integer.parseInt(m.group(2));
-				    m_second = Integer.parseInt(m.group(3));
-
+							testClock.setSecond(Integer.parseInt(m.group(3)));
+							testClock.setMinute(Integer.parseInt(m.group(2)));
+							testClock.setHour(Integer.parseInt(m.group(1)));
 		      	}
 		        else {
 		        	System.out.println("NO MATCH");
@@ -168,16 +164,16 @@ public class Clock{
 	}
 
 	class Listener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-				Calendar currentTime = Calendar.getInstance();
 
-				// set hours, minutes, second to user specified time
-				int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-				int minute = currentTime.get(Calendar.MINUTE);
-				int second = currentTime.get(Calendar.SECOND);
+		public void actionPerformed(ActionEvent e) {
+
+
+
+				// Updates time (seconds changes minutes which changes hours)
+				testClock.updateSeconds();
 
 				// print time to Screen
-				timeF.setText(hour+":"+minute+":"+second);
+				timeF.setText(testClock.getHour() + ":" + testClock.getMinute() + ":" + testClock.getSecond());
 			}
 		}
 
@@ -185,6 +181,7 @@ public class Clock{
 	public static void main(String[] args){
 
 			new Clock();
+
 
 	}
 
