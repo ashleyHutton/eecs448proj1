@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
 
-class DayOfWeek {
+public class DayOfWeek {
 
   // Month variables
   private int jan = 1;
