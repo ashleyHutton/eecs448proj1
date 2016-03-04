@@ -18,7 +18,7 @@ public class Clock{
 	private JFrame f;
 	private JPanel p;
 	JTextField timeF;
-	JTextField timeS;
+//	JTextField timeS;
 
 
 	private JButton changeTime;
@@ -60,9 +60,9 @@ public class Clock{
 		timeF.setEditable(false);
 		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
 
-		timeS = new JTextField(10);
-		timeS.setEditable(false);
-		timeS.setFont(new Font("Arial", Font.PLAIN, 30));
+//		timeS = new JTextField(10);
+	//	timeS.setEditable(false);
+		//.setFont(new Font("Arial", Font.PLAIN, 30));
 
 		clockTime = new JLabel("Hey. Here's our Label.");
 
@@ -195,7 +195,7 @@ public class Clock{
 		p.add(zoomIn);
 		p.add(zoomOut);
 		p.add(timeF);
-		p.add(timeS);
+		//p.add(timeS);
 
 		p.add(clockTime);
 
@@ -227,7 +227,7 @@ public class Clock{
 				timeClock.updateSeconds();
 
 				// print time to Screen
-				timeS.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
+			//	timeS.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 			}
 		}
 
