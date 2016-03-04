@@ -1,6 +1,6 @@
 /**
 * @file: Time.java
-* @author: Richard Aviles and Jinuk Park
+* @author: Ashley Hutton, Hannah Johnson, and Rabel Marte
 * @date: 2/10/16
 * @brief: Implementation file for Time class
 */
