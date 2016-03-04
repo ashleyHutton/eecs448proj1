@@ -34,6 +34,8 @@ public class Clock{
 	public Time stopwatch = new Time();
 	public Time timerClock = new Time();
 
+
+	private int m_zoomCounter = 3;
 	private int m_month = 1;
 	private int m_day = 3;
 
@@ -42,6 +44,15 @@ public class Clock{
 		gui();
 
 	}
+
+	public int getZoomCounter() {
+		return m_zoomCounter;
+	}
+
+	public void setZoomCounter(int counter) {
+		m_zoomCounter = counter;
+	}
+
 
 	public void gui(){
 
@@ -174,15 +185,59 @@ public class Clock{
 		zoomIn.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
+							int counter = getZoomCounter();
 
-				JOptionPane.showMessageDialog(null, "working!");
+							if(counter == 1) {
+								setZoomCounter(2);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+							}
+							else if(counter == 2) {
+								setZoomCounter(3);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+							}
+							else if(counter == 3) {
+								setZoomCounter(4);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+							}
+							else if(counter == 4) {
+								setZoomCounter(5);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+							}
+							else if(counter == 5) {
+								setZoomCounter(6);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 60));
+							}
+
+
 			}
 		});
 		zoomOut.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showMessageDialog(null, "working!");
+				int counter = getZoomCounter();
+
+				if(counter == 2) {
+					setZoomCounter(1);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 10));
+				}
+				else if(counter == 3) {
+					setZoomCounter(2);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+				}
+				else if(counter == 4) {
+					setZoomCounter(3);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+				}
+				else if(counter == 5) {
+					setZoomCounter(4);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+				}
+				else if(counter == 6) {
+					setZoomCounter(5);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+				}
+
 			}
 		});
 
