@@ -92,7 +92,6 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
-		       		// save hour minute and second as integers
 							testClock.setSecond(Integer.parseInt(m.group(3)));
 							testClock.setMinute(Integer.parseInt(m.group(2)));
 							testClock.setHour(Integer.parseInt(m.group(1)));
@@ -196,9 +195,6 @@ public class Clock{
 
 		public void actionPerformed(ActionEvent e) {
 
-
-
-				// Updates time (seconds changes minutes which changes hours)
 				testClock.updateSeconds();
 
 				// print time to Screen
