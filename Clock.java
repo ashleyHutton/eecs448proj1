@@ -1,6 +1,6 @@
 /**
 * @file: Clock.java
-* @author: Dravid Joseph
+* @author: Ashley Hutton, Hannah Johnson, and Rabel Marte
 * @date: 2/10/16
 * @brief: Implementation file for Clock class
 */
@@ -18,6 +18,7 @@ public class Clock{
 	private JFrame f;
 	private JPanel p;
 	JTextField timeF;
+//	JTextField timeS;
 
 
 	private JButton changeTime;
@@ -29,16 +30,28 @@ public class Clock{
 	private JButton zoomOut;
 
 	private JLabel clockTime;
+	public Time timeClock = new Time();
+	public Time stopwatch = new Time();
+	public Time timerClock = new Time();
 
-	private int m_hour = 0;
-	private int m_minute = 0;
-	private int m_second = 0;
+	private int m_zoomCounter = 3;
+	private int m_month = 1;
+	private int m_day = 3;
 
 	public Clock(){
 
 		gui();
 
 	}
+
+	public int getZoomCounter() {
+		return m_zoomCounter;
+	}
+
+	public void setZoomCounter(int counter) {
+		m_zoomCounter = counter;
+	}
+
 
 	public void gui(){
 
@@ -56,6 +69,10 @@ public class Clock{
 		timeF = new JTextField(10);
 		timeF.setEditable(false);
 		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+
+//		timeS = new JTextField(10);
+	//	timeS.setEditable(false);
+		//.setFont(new Font("Arial", Font.PLAIN, 30));
 
 		clockTime = new JLabel("Hey. Here's our Label.");
 
@@ -92,22 +109,29 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
-		       		// save hour minute and second as integers
-		       		m_hour = Integer.parseInt(m.group(1));
-				    m_minute = Integer.parseInt(m.group(2));
-				    m_second = Integer.parseInt(m.group(3));
-
+							timeClock.setSecond(Integer.parseInt(m.group(3)));
+							timeClock.setMinute(Integer.parseInt(m.group(2)));
+							timeClock.setHour(Integer.parseInt(m.group(1)));
 		      	}
 		        else {
 		        	System.out.println("NO MATCH");
 				}
 			}
 		});
+
 		stopWatch.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showInputDialog(null, "working!");
+				stopwatch.setSecond(0);
+				stopwatch.setMinute(0);
+				stopwatch.setHour(0);
+
+				stopwatch.updateSeconds();
+
+					timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+
+				//JOptionPane.showInputDialog(null, "working!");
 			}
 		});
 		timer.addActionListener(new ActionListener(){
@@ -128,21 +152,91 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showInputDialog("Enter the Date:");
+				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
+
+				// regular expression to find the date in the format MM/DD
+				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
+
+				// Create a Pattern object
+			    Pattern r = Pattern.compile(datePattern);
+
+			    // Now create matcher object.
+			    Matcher m = r.matcher(userDate);
+
+			    if (m.find()){
+
+			    	System.out.println(m.group(0));
+			    	System.out.println(m.group(1));
+			    	System.out.println(m.group(2));
+
+			    	// set the month and day to the given input
+			    	m_month = Integer.parseInt(m.group(1));
+			    	m_day = Integer.parseInt(m.group(2));
+
+			    }
+
+			    else{
+
+			    	System.out.println("No match");
+			    }
 			}
 		});
 		zoomIn.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
+							int counter = getZoomCounter();
 
-				JOptionPane.showMessageDialog(null, "working!");
+							if(counter == 1) {
+								setZoomCounter(2);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+							}
+							else if(counter == 2) {
+								setZoomCounter(3);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+							}
+							else if(counter == 3) {
+								setZoomCounter(4);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+							}
+							else if(counter == 4) {
+								setZoomCounter(5);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+							}
+							else if(counter == 5) {
+								setZoomCounter(6);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 60));
+							}
+
+
 			}
 		});
 		zoomOut.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showMessageDialog(null, "working!");
+				int counter = getZoomCounter();
+
+				if(counter == 2) {
+					setZoomCounter(1);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 10));
+				}
+				else if(counter == 3) {
+					setZoomCounter(2);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+				}
+				else if(counter == 4) {
+					setZoomCounter(3);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+				}
+				else if(counter == 5) {
+					setZoomCounter(4);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+				}
+				else if(counter == 6) {
+					setZoomCounter(5);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+				}
+
 			}
 		});
 
@@ -155,6 +249,7 @@ public class Clock{
 		p.add(zoomIn);
 		p.add(zoomOut);
 		p.add(timeF);
+		//p.add(timeS);
 
 		p.add(clockTime);
 
@@ -165,19 +260,28 @@ public class Clock{
 		Timer t = new Timer(1000, new Listener());
 		t.start();
 
+		//Timer sw = new Timer(1000, new stopwatchListener());
+		//sw.start();
+
+	}
+
+
+	class stopwatchListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			stopwatch.updateSeconds();
+			timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+		}
+
 	}
 
 	class Listener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-				Calendar currentTime = Calendar.getInstance();
 
-				// set hours, minutes, second to user specified time
-				int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-				int minute = currentTime.get(Calendar.MINUTE);
-				int second = currentTime.get(Calendar.SECOND);
+		public void actionPerformed(ActionEvent e) {
+
+				timeClock.updateSeconds();
 
 				// print time to Screen
-				timeF.setText(hour+":"+minute+":"+second);
+				timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 			}
 		}
 
@@ -185,6 +289,7 @@ public class Clock{
 	public static void main(String[] args){
 
 			new Clock();
+
 
 	}
 
