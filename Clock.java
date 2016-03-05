@@ -65,6 +65,7 @@
  	private Boolean timerSet = false;
  	private Boolean badTimeInput = true;
  	private Boolean isStopWatchPaused = false;
+ 	private Boolean stopWatchRunning = false;
 
  	public Clock(){
 
@@ -320,18 +321,23 @@
 
  			public void actionPerformed(ActionEvent e){
 
- 				stopwatch.setSecond(0);
- 				stopwatch.setMinute(0);
- 				stopwatch.setHour(0);
+ 				if (!stopWatchRunning){
 
- 				stopwatch.updateSeconds();
+	 				stopwatch.setSecond(0);
+	 				stopwatch.setMinute(0);
+	 				stopwatch.setHour(0);
 
- 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
+	 				stopWatchRunning = true;
+	 			}
 
- 				// go to stopwatch page
- 				c1.show(panelCont, "2");
+	 				stopwatch.updateSeconds();
 
- 				//JOptionPane.showInputDialog(null, "working!");
+	 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
+
+	 				// go to stopwatch page
+	 				c1.show(panelCont, "2");
+
+	 				//JOptionPane.showInputDialog(null, "working!");
  			}
  		});
  		timer.addActionListener(new ActionListener(){
