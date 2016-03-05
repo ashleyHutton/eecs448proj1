@@ -145,7 +145,7 @@ public class DayOfWeek {
     @post: none
     @return: returns month as an int
   */
-  public Int getMonth() {
+  public int getMonth() {
     return m_month;
   }
 
