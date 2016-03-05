@@ -28,7 +28,17 @@ public class DayOfWeek {
   // The user set month and day, and the resulting day of week variables
   private int m_month = 0;
   private int m_day = 0;
-  private String m_dayOfWeek = "";
+  private static String m_dayOfWeek = "";
+
+  /**
+    @pre:
+    @post:
+    @return:
+  */
+  public DayOfWeek() {
+    m_month = 0;
+    m_day = 0;
+  }
 
   /**
     @pre: user set integers for month and day
@@ -51,8 +61,8 @@ public class DayOfWeek {
     and returns accurate day of week as a string and not simply an integer position
     @return: day of the week as a string
   */
-  public String calculateDayOfWeek(m_month, m_day) {
-    int m_positionInWeek;
+  public String calculateDayOfWeek(int m_month, int m_day) {
+    int positionInWeek;
     if(m_month == 1) {
       positionInWeek = m_day % 7;
       return calculatePosition(positionInWeek);
@@ -101,7 +111,7 @@ public class DayOfWeek {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30) % 7;
       return calculatePosition(positionInWeek);
     }
-
+    return "";
   }
 
   /**
@@ -110,7 +120,7 @@ public class DayOfWeek {
     Thursday because Jan 1, 2016 was a Thursday.
     @return: returns day of week as a string
   */
-  public String calculatePosition(positionInWeek) {
+  public String calculatePosition(int positionInWeek) {
     if(positionInWeek == 0) { return "Thursday"; }
     else if(positionInWeek == 1) { return "Friday"; }
     else if(positionInWeek == 2) { return "Saturday"; }
@@ -118,6 +128,7 @@ public class DayOfWeek {
     else if(positionInWeek == 4) { return "Monday"; }
     else if(positionInWeek == 5) { return "Tuesday"; }
     else if(positionInWeek == 6) { return "Wednesday"; }
+    return "";
   }
 
   /**
@@ -129,6 +140,41 @@ public class DayOfWeek {
     return m_dayOfWeek;
   }
 
+  /**
+    @pre: none
+    @post: none
+    @return: returns month as an int
+  */
+  public Int getMonth() {
+    return m_month;
+  }
+
+  /**
+    @pre: none
+    @post: none
+    @return: set m_month to passed in month
+  */
+  public void setMonth(int month) {
+    m_month = month;
+  }
+
+  /**
+    @pre: valid day as integer
+    @post: set m_day to passed in day
+    @return: none
+  */
+  public void setDay(int day) {
+    m_day = day;
+  }
+
+  /**
+    @pre: none
+    @post: none
+    @return: returns day of week as int
+  */
+  public Int getDay() {
+    return m_day;
+  }
   /**
     @pre: none
     @post: checks which day of the week it currently is
@@ -143,6 +189,7 @@ public class DayOfWeek {
     else if(m_dayOfWeek == "Monday") { return "Tuesday"; }
     else if(m_dayOfWeek == "Tueday") { return "Wednesday"; }
     else if(m_dayOfWeek == "Wednesday") { return "Thursday"; }
+    else { return ""; }
   }
 
 
