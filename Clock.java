@@ -60,6 +60,7 @@ public class Clock{
 
 	private Boolean isEnable;
 	private Boolean timerSet = false;
+	private Boolean badTimeInput = true;
 
 	public Clock(){
 
@@ -218,6 +219,9 @@ public class Clock{
 
 
 		    	if (m.find( )) {
+
+					badTimeInput = false;
+
 		        	System.out.println("Found value: " + m.group(0) );
 		        	System.out.println("Found value: " + m.group(1) );
 		        	System.out.println("Found value: " + m.group(2) );
@@ -229,7 +233,7 @@ public class Clock{
 
 		      	}
 		        else {
-		        	System.out.println("NO MATCH");
+		        	JOptionPane.showMessageDialog(f,"Bad Input!");
 				}
 			}
 		});
@@ -378,9 +382,7 @@ public class Clock{
 				else if(counter == 5) {
 					setZoomCounter(6);
 					timeF.setFont(new Font("Arial", Font.PLAIN, 60));
-				}
-
-
+				} 
 			}
 		});
 		zoomOut.addActionListener(new ActionListener(){
