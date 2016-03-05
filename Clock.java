@@ -37,6 +37,9 @@ public class Clock{
 	private int m_month = 1;
 	private int m_day = 3;
 
+	private Boolean isEnable;
+
+
 	public Clock(){
 
 		gui();
@@ -125,12 +128,20 @@ public class Clock{
 			}
 		});
 		timer.addActionListener(new ActionListener(){
-
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showMessageDialog(null, "working!");
+								timerClock.setSecond(0);
+								timerClock.setMinute(0);
+								timerClock.setHour(3);
+
+								timerClock.updateSecondsTimer();
+
+							timeF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+							// JOptionPane.showMessageDialog(null, "working!");
 			}
 		});
+
+
 		clearScreen.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
@@ -202,12 +213,15 @@ public class Clock{
 		// add panel to the frame
 		f.add(p);
 
-		// Initialize timer
+		//Initialize timer
 		Timer t = new Timer(1000, new Listener());
 		t.start();
 
-		//Timer sw = new Timer(1000, new stopwatchListener());
-		//sw.start();
+		Timer sw = new Timer(1000, new stopwatchListener());
+		sw.start();
+
+		Timer ti = new Timer(1000, new timerListener());
+		ti.start();
 
 	}
 
@@ -217,15 +231,22 @@ public class Clock{
 			stopwatch.updateSeconds();
 			timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
 		}
-
 	}
 
-	class Listener implements ActionListener {
-
+	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			timerClock.updateSecondsTimer();
+			timeF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
+		}
+	}
 
+
+
+
+
+	class Listener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
 				timeClock.updateSeconds();
-
 				// print time to Screen
 				timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 			}
