@@ -46,6 +46,7 @@ public class Clock{
 	private JButton switchToClock1;
 	private JButton switchToClock2;
 	private JButton redisplayScreen;
+	private JButton switchHourMode;
 
 	// create objects for time, timer and stopwatch
 	public Time timeClock = new Time();
@@ -105,6 +106,7 @@ public class Clock{
 		switchToClock1 = new JButton("Back to Clock");
 		switchToClock2 = new JButton("Back to Clock");
 		redisplayScreen = new JButton("Redisplay Screen");
+		switchHourMode = new JButton("Switch Hour Mode");
 
 		// Create clock text field
 		timeF = new JTextField(10);
@@ -134,6 +136,7 @@ public class Clock{
 		p.add(changeDate);
 		p.add(zoomIn);
 		p.add(zoomOut);
+		p.add(switchHourMode);
 
 		p.add(timeF);
 		p.add(dateF);
@@ -143,6 +146,7 @@ public class Clock{
 		week.setMonth(m_month);
 		week.setDay(m_day);
 
+		// calculate day of week from set month/day
 		week.calculateDayOfWeek();
 		dateF.setText(week.getDayOfWeek());
 
@@ -204,38 +208,80 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				String userTime = JOptionPane.showInputDialog("Enter the time:");
-
 				/** regular expression looking for the format "##:##:## AM/PM in 12hr */
 			    String timePattern_12hr = "(^[1-9]|1[0-2]):([0-5][0-9]):([0-5][0-9])[ ]?(?i)(am|pm)$";
 			    /** regular expression looking for the format "##:##:## in 24hr */
 			    String timePattern_24hr = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
-			    // Create a Pattern object
-			    Pattern r = Pattern.compile(timePattern_24hr);
+			    Pattern r;
+			    Matcher m;
 
-			      // Now create matcher object.
-			    Matcher m = r.matcher(userTime);
+					// Check if military time
+
+			    // Create a Pattern object for appropriate hour Mode
+					if(timeClock.getIsMilitary()) {
+						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
+
+						r = Pattern.compile(timePattern_24hr);
+						// Now create matcher object.
+						m = r.matcher(userTime);
+					}
+					else {
+						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
+
+						r = Pattern.compile(timePattern_12hr);
+						// Now create matcher object.
+						m = r.matcher(userTime);
+					}
+
+					// if it's 12 hour mode, also set AM/PM
+					if(!timeClock.getIsMilitary()) {
+						if (m.find()){
+
+							String ampm = m.group(4);
+
+							System.out.println("Found value: " + m.group(0) );
+							System.out.println("Found value: " + m.group(1) );
+							System.out.println("Found value: " + m.group(2) );
+							System.out.println("Found value: " + m.group(3) );
+							System.out.println("Found value: " + m.group(4) );
+
+							timeClock.setSecond(Integer.parseInt(m.group(3)));
+							timeClock.setMinute(Integer.parseInt(m.group(2)));
+							timeClock.setHour(Integer.parseInt(m.group(1)));
 
 
-		    	if (m.find( )) {
+							if(ampm.equals("pm") || ampm.equals("PM")) {
+								System.out.println("here");
+								timeClock.setAmPm(true);
+							}
+							else if(ampm.equals("am") || ampm.equals("AM")) {
+								timeClock.setAmPm(false);
+							}
+		
+						}
 
-					badTimeInput = false;
+					}
+					else {
+						if (m.find( )) {
+								System.out.println("Found value: " + m.group(0) );
+								System.out.println("Found value: " + m.group(1) );
+								System.out.println("Found value: " + m.group(2) );
+								System.out.println("Found value: " + m.group(3) );
 
-		        	System.out.println("Found value: " + m.group(0) );
-		        	System.out.println("Found value: " + m.group(1) );
-		        	System.out.println("Found value: " + m.group(2) );
-		       		System.out.println("Found value: " + m.group(3) );
 
-					timeClock.setSecond(Integer.parseInt(m.group(3)));
-					timeClock.setMinute(Integer.parseInt(m.group(2)));
-					timeClock.setHour(Integer.parseInt(m.group(1)));
+								timeClock.setSecond(Integer.parseInt(m.group(3)));
+								timeClock.setMinute(Integer.parseInt(m.group(2)));
+								timeClock.setHour(Integer.parseInt(m.group(1)));
+							}
+							else {
+								System.out.println("NO MATCH");
+							}
+						}
 
-		      	}
-		        else {
-		        	JOptionPane.showMessageDialog(f,"Bad Input!");
-				}
-			}
+					}
+
+
 		});
 
 		stopWatch.addActionListener(new ActionListener(){
@@ -415,6 +461,19 @@ public class Clock{
 			}
 		});
 
+		switchHourMode.addActionListener(new ActionListener(){
+
+			public void actionPerformed(ActionEvent e){
+				if(timeClock.getIsMilitary()) {
+					timeClock.setIsMilitary(false);
+				}
+				else {
+					timeClock.setIsMilitary(true);
+				}
+
+			}
+		});
+
 		//Initialize timer
 		Timer t = new Timer(1000, new Listener());
 		t.start();
@@ -458,7 +517,24 @@ public class Clock{
 		public void actionPerformed(ActionEvent e) {
 				timeClock.updateSeconds();
 				// print time to Screen
-				timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
+				// if 24 hour
+				if(timeClock.getIsMilitary()) {
+					timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
+				}
+				// if 12 hour
+				else {
+					// if pm
+					if(timeClock.getAmPm()) {
+						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
+						+ " " + "PM");
+					}
+					// if am
+					else {
+						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
+						+ " " + "AM");
+					}
+
+				}
 			}
 		}
 

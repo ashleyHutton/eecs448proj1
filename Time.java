@@ -17,6 +17,7 @@ public class Time {
 	// true is pm false is am
 	private boolean amPm;
 
+
 	/**
 	* @pre  None
 	* @post Creates a Time object with defalut values of 0 for the variables hour, minute, and second.
@@ -54,6 +55,32 @@ public class Time {
 		return  amPm;
 	}
 
+	/**
+	* @pre None
+	* @post None
+	* @return return amPm
+	*/
+	public void setAmPm(boolean hourMode) {
+		this.amPm = hourMode;;
+	}
+
+	/**
+	* @pre None
+	* @post None
+	* @return return isMilitary
+	*/
+	public boolean getIsMilitary() {
+		return  isMilitary;
+	}
+
+	/**
+	* @pre Valid int mode passed in
+	* @post sets this.isMilitary to mode passed in
+	* @return None
+	*/
+	public void setIsMilitary(boolean militaryMode) {
+		this.isMilitary = militaryMode;
+	}
 
 	/**
 	* @pre None
