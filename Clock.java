@@ -47,8 +47,6 @@ public class Clock{
 	private JButton switchToClock2;
 	private JButton redisplayScreen;
 
-	private JLabel clockTime;
-
 	// create objects for time, timer and stopwatch
 	public Time timeClock = new Time();
 	public Time stopwatch = new Time();
@@ -78,8 +76,6 @@ public class Clock{
 
 
 	public void gui(){
-
-		clockTime = new JLabel("Hey. Here's our Label.");
 
 		// Create window
 		f = new JFrame("Clock");
@@ -140,9 +136,6 @@ public class Clock{
 		p.add(timeF);
 		p.add(dateF);
 		//p.add(timeS);//
-
-		// add clock text field
-		p.add(clockTime);
 
 		// set default day
 		week.setMonth(m_month);
@@ -331,13 +324,24 @@ public class Clock{
 			    	m_month = Integer.parseInt(m.group(1));
 			    	m_day = Integer.parseInt(m.group(2));
 
-					// Set member variables in DayOfWeek object and call calculateDayOfWeek
-					week.setMonth(m_month);
-					week.setDay(m_day);
+			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
+			    		( m_month == 4 && m_day == 31 ) ||
+			    		( m_month == 6 && m_day == 31 ) ||
+			    		( m_month == 9 && m_day == 31 ) ||
+			    		( m_month == 11 && m_day == 31)){
 
-					week.calculateDayOfWeek();
-					dateF.setText(week.getDayOfWeek());
-			    }
+			    		System.out.println("Bad Input");
+			    	}
+			    	else {
+
+						// Set member variables in DayOfWeek object and call calculateDayOfWeek
+						week.setMonth(m_month);
+						week.setDay(m_day);
+
+						week.calculateDayOfWeek();
+						dateF.setText(week.getDayOfWeek());
+					}
+				}
 
 			    else{
 
