@@ -501,9 +501,8 @@
  				 timerClock.getMinute() == 0 &&
  				 timerClock.getSecond() == 0 ){
 
-				System.out.println("When zero before " + timerSet);
- 				 = false;
-				System.out.println("When zero after " + timerSet);
+ 				timerSet = false;
+
  			}
  			else {
 
