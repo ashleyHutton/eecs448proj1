@@ -411,7 +411,7 @@ public class Clock{
 
 				if(counter == 1) {
 					setZoomCounter(2);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 25));
 				}
 				else if(counter == 2) {
 					setZoomCounter(3);
@@ -419,15 +419,15 @@ public class Clock{
 				}
 				else if(counter == 3) {
 					setZoomCounter(4);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 35));
 				}
 				else if(counter == 4) {
 					setZoomCounter(5);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
 				}
 				else if(counter == 5) {
 					setZoomCounter(6);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 60));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 45));
 				} 
 			}
 		});
@@ -439,11 +439,11 @@ public class Clock{
 
 				if(counter == 2) {
 					setZoomCounter(1);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 10));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
 				}
 				else if(counter == 3) {
 					setZoomCounter(2);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 25));
 				}
 				else if(counter == 4) {
 					setZoomCounter(3);
@@ -451,11 +451,11 @@ public class Clock{
 				}
 				else if(counter == 5) {
 					setZoomCounter(4);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 35));
 				}
 				else if(counter == 6) {
 					setZoomCounter(5);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
 				}
 
 			}
