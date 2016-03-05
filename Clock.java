@@ -419,14 +419,14 @@ public class Clock{
 	class stopwatchListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			stopwatch.updateSeconds();
-			stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+			stopWatchF.setText(stopwatch.getHour() + ":" + String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d", stopwatch.getSecond()));
 		}
 	}
 
 	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			timerClock.updateSecondsTimer();
-			timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
+			timerF.setText(timerClock.getHour() + ":" + String.format("%02d", timerClock.getMinute()) + ":" + String.format("%02d", timerClock.getSecond()));
 		}
 	}
 
@@ -435,7 +435,7 @@ public class Clock{
 		public void actionPerformed(ActionEvent e) {
 				timeClock.updateSeconds();
 				// print time to Screen
-				timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
+				timeF.setText(timeClock.getHour() + ":" + String.format("%02d", timeClock.getMinute()) + ":" + String.format("%02d", timeClock.getSecond()));
 			}
 		}
 
