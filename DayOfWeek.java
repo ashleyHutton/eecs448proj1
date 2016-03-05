@@ -28,31 +28,19 @@ public class DayOfWeek {
   // The user set month and day, and the resulting day of week variables
   private int m_month = 0;
   private int m_day = 0;
-  private static String m_dayOfWeek = "";
+  private String m_dayOfWeek = "";
 
   /**
-    @pre:
-    @post:
-    @return:
+    @pre: none
+    @post: set m_month and m_day to zero
+    @return: none
   */
   public DayOfWeek() {
     m_month = 0;
     m_day = 0;
+    m_dayOfWeek = "";
   }
 
-  /**
-    @pre: user set integers for month and day
-    @post: sets member variables m_month and m_day to user specified day and month
-    @return: none
-  */
-  public DayOfWeek(int month, int day) {
-      m_month = month;
-      m_day = day;
-
-      // Calculate day of week from given month and day
-      m_dayOfWeek = calculateDayOfWeek(m_month, m_day);
-
-  }
 
   /**
     @pre: valid month and day integers passed in
