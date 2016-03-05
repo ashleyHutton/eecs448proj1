@@ -13,7 +13,7 @@ public class Time {
 	private int minute;
 	private int second;
 	private boolean isMilitary = true;
-	private int militaryHour = 0;
+	private int militaryHour;
 	// true is pm false is am
 	private boolean amPm;
 
@@ -218,6 +218,7 @@ public class Time {
 	*/
 	public void updateHours()
 	{
+		militaryHour += hour;
 		// 12 Hour
 		if (!isMilitary)
 		{
