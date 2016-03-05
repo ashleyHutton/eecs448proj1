@@ -139,7 +139,7 @@ public class Clock{
 
 		p.add(timeF);
 		p.add(dateF);
-		//p.add(timeS);
+		//p.add(timeS);//
 
 		// add clock text field
 		p.add(clockTime);
