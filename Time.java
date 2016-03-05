@@ -122,6 +122,17 @@ public class Time {
 		}
 	}
 
+	public void updateSecondsTimer() {
+
+		if (second == 0) {
+			second = 59;
+			updateMinutesTimer();
+		}
+		else {
+			second--;
+		}
+	}
+
 
 	/**
 	* @pre None
@@ -140,6 +151,21 @@ public class Time {
 			minute++;
 		}
 	}
+
+	public void updateMinutesTimer() {
+
+		if(minute == 0)
+		{
+			minute = 59;
+			updateHoursTimer();
+		}
+		else {
+			minute--;
+		}
+
+
+	}
+
 
 
 	/**
@@ -172,4 +198,31 @@ public class Time {
 			}
 		}
 	}
+
+	public void updateHoursTimer() {
+		if (!isMilitary)
+		{
+			if (hour == 1)
+			{
+				hour = 12;
+			}
+			else
+			{
+				hour--;
+			}
+		}
+		if (isMilitary)
+		{
+			if (hour == 0)
+			{
+				hour = 23;
+			}
+			else
+			{
+				hour--;
+			}
+		}
+	}
+
+
 }
