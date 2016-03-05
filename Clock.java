@@ -141,14 +141,37 @@ public class Clock{
 		timer.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 
-								timerClock.setSecond(0);
-								timerClock.setMinute(0);
-								timerClock.setHour(3);
+				String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
-								timerClock.updateSecondsTimer();
+			    /** regular expression looking for the format "##:##:## in 24hr */
+			    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
-							timeF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
-							// JOptionPane.showMessageDialog(null, "working!");
+			    // Create a Pattern object
+			    Pattern r = Pattern.compile(timerPattern);
+
+			      // Now create matcher object.
+			    Matcher m = r.matcher(userTimer);
+
+
+		    	if (m.find( )) {
+		        	System.out.println("Found value: " + m.group(0) );
+		        	System.out.println("Found value: " + m.group(1) );
+		        	System.out.println("Found value: " + m.group(2) );
+		       		System.out.println("Found value: " + m.group(3) );
+
+		       		timerClock.setSecond(Integer.parseInt(m.group(3)));
+					timerClock.setMinute(Integer.parseInt(m.group(2)));
+					timerClock.setHour(Integer.parseInt(m.group(1)));
+
+					timerClock.updateSecondsTimer();
+
+					timeF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+
+
+		      	}
+		        else {
+		        	System.out.println("NO MATCH");
+				}
 			}
 		});
 
