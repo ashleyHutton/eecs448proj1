@@ -213,8 +213,6 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				String userTime = JOptionPane.showInputDialog("Enter the time:");
-
 				/** regular expression looking for the format "##:##:## AM/PM in 12hr */
 			    String timePattern_12hr = "(^[1-9]|1[0-2]):([0-5][0-9]):([0-5][0-9])[ ]?(?i)(am|pm)$";
 			    /** regular expression looking for the format "##:##:## in 24hr */
@@ -227,37 +225,45 @@ public class Clock{
 
 			    // Create a Pattern object for appropriate hour Mode
 					if(timeClock.getIsMilitary()) {
+						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
+
 						r = Pattern.compile(timePattern_24hr);
 						// Now create matcher object.
 						m = r.matcher(userTime);
 					}
 					else {
+						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
+
 						r = Pattern.compile(timePattern_12hr);
 						// Now create matcher object.
 						m = r.matcher(userTime);
 					}
 
-
-
-
-
 					// if it's 12 hour mode, also set AM/PM
 					if(!timeClock.getIsMilitary()) {
-						System.out.println("Found value: " + m.group(0) );
-						System.out.println("Found value: " + m.group(1) );
-						System.out.println("Found value: " + m.group(2) );
-						System.out.println("Found value: " + m.group(3) );
-						System.out.println("Found value: " + m.group(4) );
+						if (m.find()){
 
-						timeClock.setSecond(Integer.parseInt(m.group(3)));
-						timeClock.setMinute(Integer.parseInt(m.group(2)));
-						timeClock.setHour(Integer.parseInt(m.group(1)));
+							String ampm = m.group(4);
 
-						if(m.group(4) == "am" || m.group(4) == "AM") {
-							timeClock.setAmPm(false);
-						}
-						else if(m.group(4) == "pm" || m.group(4) == "PM") {
-							timeClock.setAmPm(true);
+							System.out.println("Found value: " + m.group(0) );
+							System.out.println("Found value: " + m.group(1) );
+							System.out.println("Found value: " + m.group(2) );
+							System.out.println("Found value: " + m.group(3) );
+							System.out.println("Found value: " + m.group(4) );
+
+							timeClock.setSecond(Integer.parseInt(m.group(3)));
+							timeClock.setMinute(Integer.parseInt(m.group(2)));
+							timeClock.setHour(Integer.parseInt(m.group(1)));
+
+
+							if(ampm.equals("pm") || ampm.equals("PM")) {
+								System.out.println("here");
+								timeClock.setAmPm(true);
+							}
+							else if(ampm.equals("am") || ampm.equals("AM")) {
+								timeClock.setAmPm(false);
+							}
+		
 						}
 
 					}
@@ -491,14 +497,18 @@ public class Clock{
 		public void actionPerformed(ActionEvent e) {
 				timeClock.updateSeconds();
 				// print time to Screen
+				// if 24 hour
 				if(timeClock.getIsMilitary()) {
 					timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
 				}
+				// if 12 hour
 				else {
+					// if pm
 					if(timeClock.getAmPm()) {
 						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
 						+ " " + "PM");
 					}
+					// if am
 					else {
 						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
 						+ " " + "AM");
