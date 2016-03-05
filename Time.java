@@ -12,7 +12,7 @@ public class Time {
 	private int hour;
 	private int minute;
 	private int second;
-	private boolean isMilitary;
+	private boolean isMilitary = true;
 	private int militaryHour = 0;
 	// true is pm false is am
 	private boolean amPm;
@@ -61,7 +61,7 @@ public class Time {
 	* @return return amPm
 	*/
 	public void setAmPm(boolean hourMode) {
-		this.amPm = hourMode;;
+		this.amPm = hourMode;
 	}
 
 	/**
@@ -111,6 +111,14 @@ public class Time {
 		return minute;
 	}
 
+	/**
+	* @pre None
+	* @post None
+	* @return military hour
+	*/
+	public int getMilitaryHour() {
+		return militaryHour;
+	}
 
 	/**
 	* @pre Valid integer minute passed in
@@ -224,10 +232,23 @@ public class Time {
 			// increment hour accordingly
 			if (hour == 12) { hour = 1; }
 			else { hour++; }
+
+			// switch am/pm at midnight or noon
+			if(hour == 12 && minute == 0 && second == 0) {
+				if(amPm == false) { amPm = true; System.out.println("Fricken switching to pm");}
+				else if(amPm == true) { amPm = false; System.out.println("Fricken switching to am");}
+			}
 		}
 		// 24 hour
 		if (isMilitary)
 		{
+			// increment military hour in case user switches to 12 hour
+			if(militaryHour == 23) { militaryHour = 0; }
+			else { militaryHour++; }
+
+			if(militaryHour >= 12) { amPm = true; }
+			else { amPm = false; }
+
 			// increment hour accordingly
 			if (hour == 23) { hour = 0; }
 			else { hour++; }

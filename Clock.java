@@ -468,6 +468,12 @@
  					timeClock.setIsMilitary(false);
  				}
  				else {
+				/*	if(timeClock.getMilitaryHour() > 12) {
+						timeClock.setAmPm(true);
+					}
+					else {
+						timeClock.setAmPm(false);
+					}*/
  					timeClock.setIsMilitary(true);
  				}
 
@@ -529,7 +535,7 @@
  						+ " " + "PM");
  					}
 					// if am
-					else {
+					else if(!timeClock.getAmPm()) {
  						timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond())
  						+ " " + "AM");
  					}
