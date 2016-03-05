@@ -46,7 +46,8 @@ public class Clock{
 	private JButton switchToClock1;
 	private JButton switchToClock2;
 	private JButton redisplayScreen;
-	private JButton switchHourMode;
+
+	private JLabel clockTime;
 
 	// create objects for time, timer and stopwatch
 	public Time timeClock = new Time();
@@ -60,8 +61,6 @@ public class Clock{
 	private int m_day = 3;
 
 	private Boolean isEnable;
-	private Boolean timerSet = false;
-	private Boolean badTimeInput = true;
 
 	public Clock(){
 
@@ -79,6 +78,8 @@ public class Clock{
 
 
 	public void gui(){
+
+		clockTime = new JLabel("Hey. Here's our Label.");
 
 		// Create window
 		f = new JFrame("Clock");
@@ -106,7 +107,9 @@ public class Clock{
 		switchToClock1 = new JButton("Back to Clock");
 		switchToClock2 = new JButton("Back to Clock");
 		redisplayScreen = new JButton("Redisplay Screen");
-		switchHourMode = new JButton("Switch Hour Mode");
+
+
+
 
 		// Create clock text field
 		timeF = new JTextField(10);
@@ -136,19 +139,11 @@ public class Clock{
 		p.add(changeDate);
 		p.add(zoomIn);
 		p.add(zoomOut);
-		p.add(switchHourMode);
-
 		p.add(timeF);
-		p.add(dateF);
-		//p.add(timeS);//
+		//p.add(timeS);
 
-		// set default day
-		week.setMonth(m_month);
-		week.setDay(m_day);
-
-		// calculate day of week from set month/day
-		week.calculateDayOfWeek();
-		dateF.setText(week.getDayOfWeek());
+		// add clock text field
+		p.add(clockTime);
 
 		// create stopwatch panel and add necessary fields and buttons
 		stopWatchPanel = new JPanel();
@@ -208,80 +203,35 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
+				String userTime = JOptionPane.showInputDialog("Enter the time:");
+
 				/** regular expression looking for the format "##:##:## AM/PM in 12hr */
 			    String timePattern_12hr = "(^[1-9]|1[0-2]):([0-5][0-9]):([0-5][0-9])[ ]?(?i)(am|pm)$";
 			    /** regular expression looking for the format "##:##:## in 24hr */
 			    String timePattern_24hr = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
-			    Pattern r;
-			    Matcher m;
+			    // Create a Pattern object
+			    Pattern r = Pattern.compile(timePattern_24hr);
 
-					// Check if military time
-
-			    // Create a Pattern object for appropriate hour Mode
-					if(timeClock.getIsMilitary()) {
-						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
-
-						r = Pattern.compile(timePattern_24hr);
-						// Now create matcher object.
-						m = r.matcher(userTime);
-					}
-					else {
-						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
-
-						r = Pattern.compile(timePattern_12hr);
-						// Now create matcher object.
-						m = r.matcher(userTime);
-					}
-
-					// if it's 12 hour mode, also set AM/PM
-					if(!timeClock.getIsMilitary()) {
-						if (m.find()){
-
-							String ampm = m.group(4);
-
-							System.out.println("Found value: " + m.group(0) );
-							System.out.println("Found value: " + m.group(1) );
-							System.out.println("Found value: " + m.group(2) );
-							System.out.println("Found value: " + m.group(3) );
-							System.out.println("Found value: " + m.group(4) );
-
-							timeClock.setSecond(Integer.parseInt(m.group(3)));
-							timeClock.setMinute(Integer.parseInt(m.group(2)));
-							timeClock.setHour(Integer.parseInt(m.group(1)));
+			      // Now create matcher object.
+			    Matcher m = r.matcher(userTime);
 
 
-							if(ampm.equals("pm") || ampm.equals("PM")) {
-								System.out.println("here");
-								timeClock.setAmPm(true);
-							}
-							else if(ampm.equals("am") || ampm.equals("AM")) {
-								timeClock.setAmPm(false);
-							}
-		
-						}
+		    	if (m.find( )) {
+		        	System.out.println("Found value: " + m.group(0) );
+		        	System.out.println("Found value: " + m.group(1) );
+		        	System.out.println("Found value: " + m.group(2) );
+		       		System.out.println("Found value: " + m.group(3) );
 
-					}
-					else {
-						if (m.find( )) {
-								System.out.println("Found value: " + m.group(0) );
-								System.out.println("Found value: " + m.group(1) );
-								System.out.println("Found value: " + m.group(2) );
-								System.out.println("Found value: " + m.group(3) );
+					timeClock.setSecond(Integer.parseInt(m.group(3)));
+					timeClock.setMinute(Integer.parseInt(m.group(2)));
+					timeClock.setHour(Integer.parseInt(m.group(1)));
 
-
-								timeClock.setSecond(Integer.parseInt(m.group(3)));
-								timeClock.setMinute(Integer.parseInt(m.group(2)));
-								timeClock.setHour(Integer.parseInt(m.group(1)));
-							}
-							else {
-								System.out.println("NO MATCH");
-							}
-						}
-
-					}
-
-
+		      	}
+		        else {
+		        	System.out.println("NO MATCH");
+				}
+			}
 		});
 
 		stopWatch.addActionListener(new ActionListener(){
@@ -294,7 +244,7 @@ public class Clock{
 
 				stopwatch.updateSeconds();
 
-				stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
 
 				// go to stopwatch page
 				c1.show(panelCont, "2");
@@ -305,44 +255,40 @@ public class Clock{
 		timer.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 
-				if (timerSet == false){
+				String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
-					timerSet = true;
+			    /** regular expression looking for the format "##:##:## in 24hr */
+			    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
-					String userTimer = JOptionPane.showInputDialog("Enter the time:");
+			    // Create a Pattern object
+			    Pattern r = Pattern.compile(timerPattern);
 
-				    /** regular expression looking for the format "##:##:## in 24hr */
-				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+			      // Now create matcher object.
+			    Matcher m = r.matcher(userTimer);
 
-				    // Create a Pattern object
-				    Pattern r = Pattern.compile(timerPattern);
 
-				      // Now create matcher object.
-				    Matcher m = r.matcher(userTimer);
+		    	if (m.find( )) {
+		        	System.out.println("Found value: " + m.group(0) );
+		        	System.out.println("Found value: " + m.group(1) );
+		        	System.out.println("Found value: " + m.group(2) );
+		       		System.out.println("Found value: " + m.group(3) );
 
-			    	if (m.find( )) {
-			        	System.out.println("Found value: " + m.group(0) );
-			        	System.out.println("Found value: " + m.group(1) );
-			        	System.out.println("Found value: " + m.group(2) );
-			       		System.out.println("Found value: " + m.group(3) );
+		       		timerClock.setSecond(Integer.parseInt(m.group(3)));
+							timerClock.setMinute(Integer.parseInt(m.group(2)));
+							timerClock.setHour(Integer.parseInt(m.group(1)));
 
-			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
-						timerClock.setMinute(Integer.parseInt(m.group(2)));
-						timerClock.setHour(Integer.parseInt(m.group(1)));
+							timerClock.updateSecondsTimer();
 
-						timerClock.updateSecondsTimer();
+							timerF.setText(timerClock.getHour() + ":" + String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
 
-						timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+							// go to timer page
+							c1.show(panelCont, "3");
 
-			      	}
-			        else {
-			        	System.out.println("NO MATCH");
-					}
+
+		      	}
+		        else {
+		        	System.out.println("NO MATCH");
 				}
-
-					// go to timer page
-					c1.show(panelCont, "3");
-
 			}
 		});
 
@@ -379,24 +325,12 @@ public class Clock{
 			    	m_month = Integer.parseInt(m.group(1));
 			    	m_day = Integer.parseInt(m.group(2));
 
-			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
-			    		( m_month == 4 && m_day == 31 ) ||
-			    		( m_month == 6 && m_day == 31 ) ||
-			    		( m_month == 9 && m_day == 31 ) ||
-			    		( m_month == 11 && m_day == 31)){
-
-			    		System.out.println("Bad Input");
-			    	}
-			    	else {
-
 						// Set member variables in DayOfWeek object and call calculateDayOfWeek
 						week.setMonth(m_month);
 						week.setDay(m_day);
 
-						week.calculateDayOfWeek();
-						dateF.setText(week.getDayOfWeek());
-					}
-				}
+
+			    }
 
 			    else{
 
@@ -407,28 +341,30 @@ public class Clock{
 		zoomIn.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
-				int counter = getZoomCounter();
+							int counter = getZoomCounter();
 
-				if(counter == 1) {
-					setZoomCounter(2);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 25));
-				}
-				else if(counter == 2) {
-					setZoomCounter(3);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 30));
-				}
-				else if(counter == 3) {
-					setZoomCounter(4);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 35));
-				}
-				else if(counter == 4) {
-					setZoomCounter(5);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
-				}
-				else if(counter == 5) {
-					setZoomCounter(6);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 45));
-				} 
+							if(counter == 1) {
+								setZoomCounter(2);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+							}
+							else if(counter == 2) {
+								setZoomCounter(3);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+							}
+							else if(counter == 3) {
+								setZoomCounter(4);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+							}
+							else if(counter == 4) {
+								setZoomCounter(5);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+							}
+							else if(counter == 5) {
+								setZoomCounter(6);
+								timeF.setFont(new Font("Arial", Font.PLAIN, 60));
+							}
+
+
 			}
 		});
 		zoomOut.addActionListener(new ActionListener(){
@@ -439,11 +375,11 @@ public class Clock{
 
 				if(counter == 2) {
 					setZoomCounter(1);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 10));
 				}
 				else if(counter == 3) {
 					setZoomCounter(2);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 25));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
 				}
 				else if(counter == 4) {
 					setZoomCounter(3);
@@ -451,24 +387,11 @@ public class Clock{
 				}
 				else if(counter == 5) {
 					setZoomCounter(4);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 35));
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
 				}
 				else if(counter == 6) {
 					setZoomCounter(5);
-					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
-				}
-
-			}
-		});
-
-		switchHourMode.addActionListener(new ActionListener(){
-
-			public void actionPerformed(ActionEvent e){
-				if(timeClock.getIsMilitary()) {
-					timeClock.setIsMilitary(false);
-				}
-				else {
-					timeClock.setIsMilitary(true);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
 				}
 
 			}
@@ -486,29 +409,27 @@ public class Clock{
 
 	}
 
+	class DayOfWeekListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			week.calculateDayOfWeek();
+			dateF.setText(week.getDayOfWeek());
+		}
+	}
+
+
+
+
 	class stopwatchListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			stopwatch.updateSeconds();
-			stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+			stopWatchF.setText(stopwatch.getHour() + ":" + String.format("%02d",stopwatch.getMinute())+":" + String.format("%02d",stopwatch.getSecond()));
 		}
 	}
 
 	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
-			// check that timer isn't at 0
-			if ( timerClock.getHour() == 0 &&
-				 timerClock.getMinute() == 0 &&
-				 timerClock.getSecond() == 0 ){
-
-				timerSet = false;
-
-			}
-			else {
-
-				timerClock.updateSecondsTimer();
-				timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
-			}
+			timerClock.updateSecondsTimer();
+			timerF.setText(timerClock.getHour() + ":" + String.format("%02d",timerClock.getMinute()) + ":" + String.format("%02d",timerClock.getSecond()));
 		}
 	}
 
@@ -517,24 +438,7 @@ public class Clock{
 		public void actionPerformed(ActionEvent e) {
 				timeClock.updateSeconds();
 				// print time to Screen
-				// if 24 hour
-				if(timeClock.getIsMilitary()) {
-					timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond());
-				}
-				// if 12 hour
-				else {
-					// if pm
-					if(timeClock.getAmPm()) {
-						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
-						+ " " + "PM");
-					}
-					// if am
-					else {
-						timeF.setText(timeClock.getHour() + ":" + timeClock.getMinute() + ":" + timeClock.getSecond()
-						+ " " + "AM");
-					}
-
-				}
+				timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond()));
 			}
 		}
 
@@ -542,6 +446,7 @@ public class Clock{
 	public static void main(String[] args){
 
 			new Clock();
+
 
 	}
 
