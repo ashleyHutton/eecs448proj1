@@ -59,6 +59,7 @@ public class Clock{
 	private int m_day = 3;
 
 	private Boolean isEnable;
+	private Boolean timerSet = false;
 
 	public Clock(){
 
@@ -254,40 +255,44 @@ public class Clock{
 		timer.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 
-				String userTimer = JOptionPane.showInputDialog("Enter the time:");
+				if (timerSet == false){
 
-			    /** regular expression looking for the format "##:##:## in 24hr */
-			    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+					timerSet = true;
 
-			    // Create a Pattern object
-			    Pattern r = Pattern.compile(timerPattern);
+					String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
-			      // Now create matcher object.
-			    Matcher m = r.matcher(userTimer);
+				    /** regular expression looking for the format "##:##:## in 24hr */
+				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
+				    // Create a Pattern object
+				    Pattern r = Pattern.compile(timerPattern);
 
-		    	if (m.find( )) {
-		        	System.out.println("Found value: " + m.group(0) );
-		        	System.out.println("Found value: " + m.group(1) );
-		        	System.out.println("Found value: " + m.group(2) );
-		       		System.out.println("Found value: " + m.group(3) );
+				      // Now create matcher object.
+				    Matcher m = r.matcher(userTimer);
 
-		       		timerClock.setSecond(Integer.parseInt(m.group(3)));
-					timerClock.setMinute(Integer.parseInt(m.group(2)));
-					timerClock.setHour(Integer.parseInt(m.group(1)));
+			    	if (m.find( )) {
+			        	System.out.println("Found value: " + m.group(0) );
+			        	System.out.println("Found value: " + m.group(1) );
+			        	System.out.println("Found value: " + m.group(2) );
+			       		System.out.println("Found value: " + m.group(3) );
 
-					timerClock.updateSecondsTimer();
+			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
+						timerClock.setMinute(Integer.parseInt(m.group(2)));
+						timerClock.setHour(Integer.parseInt(m.group(1)));
 
-					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+						timerClock.updateSecondsTimer();
+
+						timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+
+			      	}
+			        else {
+			        	System.out.println("NO MATCH");
+					}
+				}
 
 					// go to timer page
 					c1.show(panelCont, "3");
 
-
-		      	}
-		        else {
-		        	System.out.println("NO MATCH");
-				}
 			}
 		});
 
@@ -429,8 +434,20 @@ public class Clock{
 
 	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			timerClock.updateSecondsTimer();
-			timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
+
+			// check that timer isn't at 0
+			if ( timerClock.getHour() == 0 &&
+				 timerClock.getMinute() == 0 &&
+				 timerClock.getSecond() == 0 ){
+
+				timerSet = false;
+
+			}
+			else {
+
+				timerClock.updateSecondsTimer();
+				timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
+			}
 		}
 	}
 
