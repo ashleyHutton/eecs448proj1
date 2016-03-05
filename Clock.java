@@ -144,6 +144,13 @@ public class Clock{
 		// add clock text field
 		p.add(clockTime);
 
+		// set default day
+		week.setMonth(m_month);
+		week.setDay(m_day);
+
+		week.calculateDayOfWeek();
+		dateF.setText(week.getDayOfWeek());
+
 		// create stopwatch panel and add necessary fields and buttons
 		stopWatchPanel = new JPanel();
 		stopWatchPanel.setBackground(Color.WHITE);
