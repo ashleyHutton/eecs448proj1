@@ -108,9 +108,6 @@ public class Clock{
 		switchToClock2 = new JButton("Back to Clock");
 		redisplayScreen = new JButton("Redisplay Screen");
 
-
-
-
 		// Create clock text field
 		timeF = new JTextField(10);
 		timeF.setEditable(false);
@@ -139,7 +136,9 @@ public class Clock{
 		p.add(changeDate);
 		p.add(zoomIn);
 		p.add(zoomOut);
+
 		p.add(timeF);
+		p.add(dateF);
 		//p.add(timeS);
 
 		// add clock text field
@@ -274,12 +273,12 @@ public class Clock{
 		       		System.out.println("Found value: " + m.group(3) );
 
 		       		timerClock.setSecond(Integer.parseInt(m.group(3)));
-							timerClock.setMinute(Integer.parseInt(m.group(2)));
-							timerClock.setHour(Integer.parseInt(m.group(1)));
+					timerClock.setMinute(Integer.parseInt(m.group(2)));
+					timerClock.setHour(Integer.parseInt(m.group(1)));
 
-							timerClock.updateSecondsTimer();
+					timerClock.updateSecondsTimer();
 
-							timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
 
 					// go to timer page
 					c1.show(panelCont, "3");
@@ -325,11 +324,12 @@ public class Clock{
 			    	m_month = Integer.parseInt(m.group(1));
 			    	m_day = Integer.parseInt(m.group(2));
 
-						// Set member variables in DayOfWeek object and call calculateDayOfWeek
-						week.setMonth(m_month);
-						week.setDay(m_day);
+					// Set member variables in DayOfWeek object and call calculateDayOfWeek
+					week.setMonth(m_month);
+					week.setDay(m_day);
 
-
+					week.calculateDayOfWeek();
+					dateF.setText(week.getDayOfWeek());
 			    }
 
 			    else{
@@ -341,28 +341,28 @@ public class Clock{
 		zoomIn.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e){
-							int counter = getZoomCounter();
+				int counter = getZoomCounter();
 
-							if(counter == 1) {
-								setZoomCounter(2);
-								timeF.setFont(new Font("Arial", Font.PLAIN, 20));
-							}
-							else if(counter == 2) {
-								setZoomCounter(3);
-								timeF.setFont(new Font("Arial", Font.PLAIN, 30));
-							}
-							else if(counter == 3) {
-								setZoomCounter(4);
-								timeF.setFont(new Font("Arial", Font.PLAIN, 40));
-							}
-							else if(counter == 4) {
-								setZoomCounter(5);
-								timeF.setFont(new Font("Arial", Font.PLAIN, 50));
-							}
-							else if(counter == 5) {
-								setZoomCounter(6);
-								timeF.setFont(new Font("Arial", Font.PLAIN, 60));
-							}
+				if(counter == 1) {
+					setZoomCounter(2);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 20));
+				}
+				else if(counter == 2) {
+					setZoomCounter(3);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+				}
+				else if(counter == 3) {
+					setZoomCounter(4);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 40));
+				}
+				else if(counter == 4) {
+					setZoomCounter(5);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 50));
+				}
+				else if(counter == 5) {
+					setZoomCounter(6);
+					timeF.setFont(new Font("Arial", Font.PLAIN, 60));
+				}
 
 
 			}
