@@ -61,57 +61,57 @@ public class DayOfWeek {
     and returns accurate day of week as a string and not simply an integer position
     @return: day of the week as a string
   */
-  public String calculateDayOfWeek(int m_month, int m_day) {
+  public void calculateDayOfWeek() {
     int positionInWeek;
-    if(m_month == 1) {
+    if(this.m_month == 1) {
       positionInWeek = m_day % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 2) {
+    else if(this.m_month == 2) {
       positionInWeek = (m_day + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 3) {
+    else if(this.m_month == 3) {
       positionInWeek = (m_day + 31 + 29) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 4) {
+    else if(this.m_month == 4) {
       positionInWeek = (m_day + 31 + 29 + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 5) {
+    else if(this.m_month == 5) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 6) {
+    else if(this.m_month == 6) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 7) {
+    else if(this.m_month == 7) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 8) {
+    else if(this.m_month == 8) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 9) {
+    else if(this.m_month == 9) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 10) {
+    else if(this.m_month == 10) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 11) {
+    else if(this.m_month == 11) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    else if(m_month == 12) {
+    else if(this.m_month == 12) {
       positionInWeek = (m_day + 31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30) % 7;
-      return calculatePosition(positionInWeek);
+      m_dayOfWeek = calculatePosition(positionInWeek);
     }
-    return "";
+    return;
   }
 
   /**
@@ -182,13 +182,13 @@ public class DayOfWeek {
   */
   public String incrementDayOfWeek() {
     // Would this work?
-    if(m_dayOfWeek == "Thursday") { return "Friday"; }
-    else if(m_dayOfWeek == "Friday") { return "Saturday"; }
-    else if(m_dayOfWeek == "Saturday") { return "Sunday"; }
-    else if(m_dayOfWeek == "Sunday") { return "Monday"; }
-    else if(m_dayOfWeek == "Monday") { return "Tuesday"; }
-    else if(m_dayOfWeek == "Tueday") { return "Wednesday"; }
-    else if(m_dayOfWeek == "Wednesday") { return "Thursday"; }
+    if(m_dayOfWeek == "Thursday") { m_dayOfWeek = "Friday"; }
+    else if(m_dayOfWeek == "Friday") { m_dayOfWeek = "Saturday"; }
+    else if(m_dayOfWeek == "Saturday") { m_dayOfWeek = "Sunday"; }
+    else if(m_dayOfWeek == "Sunday") { m_dayOfWeek = "Monday"; }
+    else if(m_dayOfWeek == "Monday") { m_dayOfWeek = "Tuesday"; }
+    else if(m_dayOfWeek == "Tueday") { m_dayOfWeek = "Wednesday"; }
+    else if(m_dayOfWeek == "Wednesday") { m_dayOfWeek = "Thursday"; }
     else { return ""; }
   }
 
