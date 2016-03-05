@@ -15,20 +15,26 @@ import java.util.regex.Pattern;
 
 public class Clock{
 
+	// create frame
 	private JFrame f;
-	private JPanel p;
+
+	// create panels for different views
 	private JPanel panelCont;
+	private JPanel p;
 	private JPanel stopWatchPanel;
 	private JPanel timerPanel;
 	private JPanel clearScreenPanel;
 
+	// create layout
 	CardLayout c1 = new CardLayout();
+
+	// create text fields for time, timer, and stopwatch
 	JTextField timeF;
 	JTextField timerF;
 	JTextField stopWatchF;
-//	JTextField timeS;
+	//	JTextField timeS;
 
-
+	// create buttons
 	private JButton changeTime;
 	private JButton stopWatch;
 	private JButton timer;
@@ -36,23 +42,23 @@ public class Clock{
 	private JButton changeDate;
 	private JButton zoomIn;
 	private JButton zoomOut;
-
 	private JButton switchToClock1;
 	private JButton switchToClock2;
 	private JButton redisplayScreen;
 
 	private JLabel clockTime;
+
+	// create objects for time, timer and stopwatch
 	public Time timeClock = new Time();
 	public Time stopwatch = new Time();
 	public Time timerClock = new Time();
 
-
+	// default zoom and calendar date
 	private int m_zoomCounter = 3;
 	private int m_month = 1;
 	private int m_day = 3;
 
 	private Boolean isEnable;
-
 
 	public Clock(){
 
@@ -100,7 +106,6 @@ public class Clock{
 		switchToClock2 = new JButton("Back to Clock");
 		redisplayScreen = new JButton("Redisplay Screen");
 
-
 		// Create clock text field
 		timeF = new JTextField(10);
 		timeF.setEditable(false);
@@ -127,23 +132,28 @@ public class Clock{
 		p.add(timeF);
 		//p.add(timeS);
 
+		// add clock text field
 		p.add(clockTime);
 
+		// create stopwatch panel and add necessary fields and buttons
 		stopWatchPanel = new JPanel();
 		stopWatchPanel.setBackground(Color.WHITE);
 
 		stopWatchPanel.add(switchToClock1);
 		stopWatchPanel.add(stopWatchF);
 
+		// create timer panel and add necessary fields and buttons
 		timerPanel = new JPanel();
 		timerPanel.setBackground(Color.WHITE);
 
 		timerPanel.add(switchToClock2);
 		timerPanel.add(timerF);
 
+		// create panel to hide the display
 		clearScreenPanel = new JPanel();
 		clearScreenPanel.add(redisplayScreen);
 
+		// add panels to card layout
 		panelCont.add(p, "1");
 		panelCont.add(stopWatchPanel, "2");
 		panelCont.add(timerPanel, "3");
@@ -159,6 +169,7 @@ public class Clock{
 		switchToClock1.addActionListener(new ActionListener(){
 
 				public void actionPerformed(ActionEvent e){
+					// return to main page
 					c1.show(panelCont, "1");
 				}
 		});
@@ -166,12 +177,14 @@ public class Clock{
 		switchToClock2.addActionListener(new ActionListener(){
 
 				public void actionPerformed(ActionEvent e){
+					// return to main page
 					c1.show(panelCont, "1");
 				}
 		});
 		redisplayScreen.addActionListener(new ActionListener(){
 
 				public void actionPerformed(ActionEvent e){
+					// return to main page
 					c1.show(panelCont, "1");
 				}
 		});
@@ -223,6 +236,7 @@ public class Clock{
 
 				stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
 
+				// go to stopwatch page
 				c1.show(panelCont, "2");
 
 				//JOptionPane.showInputDialog(null, "working!");
@@ -257,6 +271,7 @@ public class Clock{
 
 					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
 
+					// go to timer page
 					c1.show(panelCont, "3");
 
 
@@ -393,9 +408,6 @@ public class Clock{
 			timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
 		}
 	}
-
-
-
 
 
 	class Listener implements ActionListener {
