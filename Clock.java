@@ -63,9 +63,12 @@
 
  	private Boolean isEnable;
  	private Boolean timerSet = false;
- 	private Boolean badTimeInput = true;
  	private Boolean isStopWatchPaused = false;
  	private Boolean stopWatchRunning = false;
+
+ 	private Boolean goodTimeInput = false;
+ 	private Boolean goodTimerInput = false;
+ 	private Boolean goodCalendarInput = false;
 
  	public Clock(){
 
@@ -252,8 +255,15 @@
  					// Check if military time
 
  			    // Create a Pattern object for appropriate hour Mode
+ 			    while (!goodTimeInput){
+
  					if(timeClock.getIsMilitary()) {
  						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
+
+ 						if (userTime ==  null){
+ 								System.out.println("Bad");
+								return;
+	 					}
 
  						r = Pattern.compile(timePattern_24hr);
  						// Now create matcher object.
@@ -261,6 +271,11 @@
  					}
  					else {
  						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
+
+ 						if (userTime ==  null){
+							System.out.println("Bad");
+							return;
+	 					}
 
  						r = Pattern.compile(timePattern_12hr);
  						// Now create matcher object.
@@ -270,6 +285,7 @@
  					// if it's 12 hour mode, also set AM/PM
  					if(!timeClock.getIsMilitary()) {
  						if (m.find()){
+ 							goodTimeInput = true;
 
  							String ampm = m.group(4);
 
@@ -291,12 +307,12 @@
  							else if(ampm.equals("am") || ampm.equals("AM")) {
  								timeClock.setAmPm(false);
  							}
-
  						}
-
 					}
  					else {
  						if (m.find( )) {
+ 								goodTimeInput = true;
+
  								System.out.println("Found value: " + m.group(0) );
  								System.out.println("Found value: " + m.group(1) );
  								System.out.println("Found value: " + m.group(2) );
@@ -307,13 +323,11 @@
  								timeClock.setMinute(Integer.parseInt(m.group(2)));
  								timeClock.setHour(Integer.parseInt(m.group(1)));
 							}
-							else {
- 								System.out.println("NO MATCH");
- 							}
  						}
-
  					}
 
+ 					goodTimeInput = false;
+ 				}
 
   		});
 
@@ -347,40 +361,44 @@
 
  					timerSet = true;
 
- 					String userTimer = JOptionPane.showInputDialog("Enter the time:");
+ 					while (!goodTimerInput){
 
- 				    /** regular expression looking for the format "##:##:## in 24hr */
- 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+	 					String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
- 				    // Create a Pattern object
- 				    Pattern r = Pattern.compile(timerPattern);
+	 				    /** regular expression looking for the format "##:##:## in 24hr */
+	 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
- 				      // Now create matcher object.
- 				    Matcher m = r.matcher(userTimer);
+	 				    // Create a Pattern object
+	 				    Pattern r = Pattern.compile(timerPattern);
 
- 			    	if (m.find( )) {
- 			        	System.out.println("Found value: " + m.group(0) );
- 			        	System.out.println("Found value: " + m.group(1) );
- 			        	System.out.println("Found value: " + m.group(2) );
- 			       		System.out.println("Found value: " + m.group(3) );
+	 				      // Now create matcher object.
+	 				    Matcher m = r.matcher(userTimer);
 
- 			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
- 						timerClock.setMinute(Integer.parseInt(m.group(2)));
- 						timerClock.setHour(Integer.parseInt(m.group(1)));
+	 			    	if (m.find( )) {
 
- 						timerClock.updateSecondsTimer();
+	 			    		goodTimerInput = true;
 
- 						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
+	 			        	System.out.println("Found value: " + m.group(0) );
+	 			        	System.out.println("Found value: " + m.group(1) );
+	 			        	System.out.println("Found value: " + m.group(2) );
+	 			       		System.out.println("Found value: " + m.group(3) );
 
- 			      	}
- 			        else {
- 			        	System.out.println("NO MATCH");
- 					}
+	 			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
+	 						timerClock.setMinute(Integer.parseInt(m.group(2)));
+	 						timerClock.setHour(Integer.parseInt(m.group(1)));
+
+	 						timerClock.updateSecondsTimer();
+
+	 						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
+
+	 			      	}
+	 				}
+
+	 				goodTimerInput = false;
  				}
 
  					// go to timer page
  					c1.show(panelCont, "3");
-
  			}
  		});
 
@@ -396,50 +414,52 @@
 
  			public void actionPerformed(ActionEvent e){
 
- 				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
+ 				while (!goodCalendarInput){
 
- 				// regular expression to find the date in the format MM/DD
- 				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
+	 				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
 
- 				// Create a Pattern object
- 			    Pattern r = Pattern.compile(datePattern);
+	 				// regular expression to find the date in the format MM/DD
+	 				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
 
- 			    // Now create matcher object.
- 			    Matcher m = r.matcher(userDate);
+	 				// Create a Pattern object
+	 			    Pattern r = Pattern.compile(datePattern);
 
- 			    if (m.find()){
+	 			    // Now create matcher object.
+	 			    Matcher m = r.matcher(userDate);
 
- 			    	System.out.println(m.group(0));
- 			    	System.out.println(m.group(1));
- 			    	System.out.println(m.group(2));
+	 			    if (m.find()){
 
- 			    	// set the month and day to the given input
- 			    	m_month = Integer.parseInt(m.group(1));
- 			    	m_day = Integer.parseInt(m.group(2));
+	 			    	goodCalendarInput = true;
 
- 			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
- 			    		( m_month == 4 && m_day == 31 ) ||
- 			    		( m_month == 6 && m_day == 31 ) ||
- 			    		( m_month == 9 && m_day == 31 ) ||
- 			    		( m_month == 11 && m_day == 31)){
+	 			    	System.out.println(m.group(0));
+	 			    	System.out.println(m.group(1));
+	 			    	System.out.println(m.group(2));
 
- 			    		System.out.println("Bad Input");
- 			    	}
- 			    	else {
+	 			    	// set the month and day to the given input
+	 			    	m_month = Integer.parseInt(m.group(1));
+	 			    	m_day = Integer.parseInt(m.group(2));
 
- 						// Set member variables in DayOfWeek object and call calculateDayOfWeek
- 						week.setMonth(m_month);
- 						week.setDay(m_day);
+	 			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
+	 			    		( m_month == 4 && m_day == 31 ) ||
+	 			    		( m_month == 6 && m_day == 31 ) ||
+	 			    		( m_month == 9 && m_day == 31 ) ||
+	 			    		( m_month == 11 && m_day == 31)){
 
- 						week.calculateDayOfWeek();
- 						dateF.setText(week.getDayOfWeek());
- 					}
- 				}
+	 			    		System.out.println("Bad Input");
+	 			    	}
+	 			    	else {
 
- 			    else{
+	 						// Set member variables in DayOfWeek object and call calculateDayOfWeek
+	 						week.setMonth(m_month);
+	 						week.setDay(m_day);
 
- 			    	System.out.println("No match");
- 			    }
+	 						week.calculateDayOfWeek();
+	 						dateF.setText(week.getDayOfWeek());
+	 					}
+	 				}
+	 			}
+
+	 			goodCalendarInput = false;
  			}
  		});
  		zoomIn.addActionListener(new ActionListener(){
