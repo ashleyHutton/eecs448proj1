@@ -17,7 +17,15 @@ public class Clock{
 
 	private JFrame f;
 	private JPanel p;
+	private JPanel panelCont;
+	private JPanel stopWatchPanel;
+	private JPanel timerPanel;
+	private JPanel clearScreenPanel;
+
+	CardLayout c1 = new CardLayout();
 	JTextField timeF;
+	JTextField timerF;
+	JTextField stopWatchF;
 //	JTextField timeS;
 
 
@@ -28,6 +36,10 @@ public class Clock{
 	private JButton changeDate;
 	private JButton zoomIn;
 	private JButton zoomOut;
+
+	private JButton switchToClock1;
+	private JButton switchToClock2;
+	private JButton redisplayScreen;
 
 	private JLabel clockTime;
 	public Time timeClock = new Time();
@@ -59,26 +71,22 @@ public class Clock{
 
 	public void gui(){
 
+		clockTime = new JLabel("Hey. Here's our Label.");
+
 		// Create window
 		f = new JFrame("Clock");
 		f.setVisible(true);
 		f.setSize(600,400);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // program stops when x clicked
 
+		panelCont = new JPanel();
+		panelCont.setLayout(c1);
+		// add panel to the frame
+		f.add(panelCont);
+
 		// Create panel and make background white
 		p = new JPanel();
 		p.setBackground(Color.WHITE);
-
-		// Create clock text field
-		timeF = new JTextField(10);
-		timeF.setEditable(false);
-		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
-
-//		timeS = new JTextField(10);
-	//	timeS.setEditable(false);
-		//.setFont(new Font("Arial", Font.PLAIN, 30));
-
-		clockTime = new JLabel("Hey. Here's our Label.");
 
 		// Create buttons and button action
 		changeTime = new JButton("Change Time");
@@ -88,6 +96,85 @@ public class Clock{
 		changeDate = new JButton("Change Date");
 		zoomIn = new JButton("Zoom In");
 		zoomOut = new JButton("Zoom Out");
+		switchToClock1 = new JButton("Back to Clock");
+		switchToClock2 = new JButton("Back to Clock");
+		redisplayScreen = new JButton("Redisplay Screen");
+
+
+		// Create clock text field
+		timeF = new JTextField(10);
+		timeF.setEditable(false);
+		timeF.setFont(new Font("Arial", Font.PLAIN, 30));
+
+		// Create timer text field
+		timerF = new JTextField(10);
+		timerF.setEditable(false);
+		timerF.setFont(new Font("Arial", Font.PLAIN, 30));
+
+		// Create stopwatch text field
+		stopWatchF = new JTextField(10);
+		stopWatchF.setEditable(false);
+		stopWatchF.setFont(new Font("Arial", Font.PLAIN, 30));
+		
+		// add button to panel
+		p.add(changeTime);
+		p.add(stopWatch);
+		p.add(timer);
+		p.add(clearScreen);
+		p.add(changeDate);
+		p.add(zoomIn);
+		p.add(zoomOut);
+		p.add(timeF);
+		//p.add(timeS);
+
+		p.add(clockTime);
+
+		stopWatchPanel = new JPanel();
+		stopWatchPanel.setBackground(Color.WHITE);
+
+		stopWatchPanel.add(switchToClock1);
+		stopWatchPanel.add(stopWatchF);
+
+		timerPanel = new JPanel();
+		timerPanel.setBackground(Color.WHITE);
+
+		timerPanel.add(switchToClock2);
+		timerPanel.add(timerF);
+
+		clearScreenPanel = new JPanel();
+		clearScreenPanel.add(redisplayScreen);
+
+		panelCont.add(p, "1");
+		panelCont.add(stopWatchPanel, "2");
+		panelCont.add(timerPanel, "3");
+		panelCont.add(clearScreenPanel, "4");
+		c1.show(panelCont, "1");
+
+
+//		timeS = new JTextField(10);
+	//	timeS.setEditable(false);
+		//.setFont(new Font("Arial", Font.PLAIN, 30));
+
+
+		switchToClock1.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent e){
+					c1.show(panelCont, "1");
+				}
+		});
+
+		switchToClock2.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent e){
+					c1.show(panelCont, "1");
+				}
+		});
+		redisplayScreen.addActionListener(new ActionListener(){
+
+				public void actionPerformed(ActionEvent e){
+					c1.show(panelCont, "1");
+				}
+		});
 
 		changeTime.addActionListener(new ActionListener(){
 
@@ -113,9 +200,10 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
-							timeClock.setSecond(Integer.parseInt(m.group(3)));
-							timeClock.setMinute(Integer.parseInt(m.group(2)));
-							timeClock.setHour(Integer.parseInt(m.group(1)));
+					timeClock.setSecond(Integer.parseInt(m.group(3)));
+					timeClock.setMinute(Integer.parseInt(m.group(2)));
+					timeClock.setHour(Integer.parseInt(m.group(1)));
+
 		      	}
 		        else {
 		        	System.out.println("NO MATCH");
@@ -133,7 +221,9 @@ public class Clock{
 
 				stopwatch.updateSeconds();
 
-					timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+				stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+
+				c1.show(panelCont, "2");
 
 				//JOptionPane.showInputDialog(null, "working!");
 			}
@@ -165,7 +255,9 @@ public class Clock{
 
 					timerClock.updateSecondsTimer();
 
-					timeF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+
+					c1.show(panelCont, "3");
 
 
 		      	}
@@ -180,7 +272,7 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				JOptionPane.showMessageDialog(null, "working!");
+				c1.show(panelCont, "4");
 			}
 		});
 		changeDate.addActionListener(new ActionListener(){
@@ -275,22 +367,6 @@ public class Clock{
 			}
 		});
 
-		// add button to panel
-		p.add(changeTime);
-		p.add(stopWatch);
-		p.add(timer);
-		p.add(clearScreen);
-		p.add(changeDate);
-		p.add(zoomIn);
-		p.add(zoomOut);
-		p.add(timeF);
-		//p.add(timeS);
-
-		p.add(clockTime);
-
-		// add panel to the frame
-		f.add(p);
-
 		//Initialize timer
 		Timer t = new Timer(1000, new Listener());
 		t.start();
@@ -307,14 +383,14 @@ public class Clock{
 	class stopwatchListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			stopwatch.updateSeconds();
-			timeF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+			stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
 		}
 	}
 
 	class timerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			timerClock.updateSecondsTimer();
-			timeF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
+			timerF.setText(timerClock.getHour() + ":" + timerClock.getMinute() + ":" + timerClock.getSecond());
 		}
 	}
 
