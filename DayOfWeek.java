@@ -41,6 +41,16 @@ public class DayOfWeek {
     m_dayOfWeek = "";
   }
 
+  /**
+    @pre: valid integers month and day and string day of week
+    @post: set m_month and m_day and m_dayOfWeek to passed in values
+    @return: none
+  */
+  public DayOfWeek(int month, int day, String dayOfWeek) {
+    m_month = month;
+    m_day = day;
+    m_dayOfWeek = dayOfWeek;
+  }
 
   /**
     @pre: valid month and day integers passed in
