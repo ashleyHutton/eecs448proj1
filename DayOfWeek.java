@@ -160,7 +160,7 @@ public class DayOfWeek {
     @post: none
     @return: returns day of week as int
   */
-  public Int getDay() {
+  public int getDay() {
     return m_day;
   }
   /**
