@@ -13,6 +13,9 @@ public class Time {
 	private int minute;
 	private int second;
 	private boolean isMilitary;
+	private int militaryHour = 0;
+	// true is pm false is am
+	private boolean amPm;
 
 	/**
 	* @pre  None
@@ -34,7 +37,6 @@ public class Time {
 	* @post Creates a Time object whose variable values are set to the three passed in ints.  Boolean determines military time
 	* @return None
 	*/
-
 	public Time(boolean isMilitary, int hour, int minute, int second)
 	{
 		this.isMilitary = isMilitary;
@@ -43,21 +45,29 @@ public class Time {
 		this.second = second;
 	}
 
+	/**
+	* @pre None
+	* @post None
+	* @return return amPm
+	*/
+	public boolean getAmPm() {
+		return  amPm;
+	}
+
 
 	/**
 	* @pre None
-	* @post Return hour
-	* @return hour
+	* @post None
+	* @return Return hour
 	*/
-
 	public int getHour() {
 		return hour;
 	}
 
 
 	/**
-	* @pre Have to pass in an int
-	* @post Sets the variable "hour" to the passed in value
+	* @pre Valid hour integer passed in
+	* @post Sets this.hour to the passed in value
 	* @return None
 	*/
 	public void setHour(int hour) {
@@ -68,7 +78,7 @@ public class Time {
 	/**
 	* @pre None
 	* @post None
-	* @return the value for the variable "minute"
+	* @return minute
 	*/
 	public int getMinute() {
 		return minute;
@@ -76,8 +86,8 @@ public class Time {
 
 
 	/**
-	* @pre Have to pass in an int
-	* @post Sets the variable "minute" to the passed in value
+	* @pre Valid integer minute passed in
+	* @post Sets this.minute to passed in minute
 	* @return None
 	*/
 	public void setMinute(int minute) {
@@ -88,7 +98,7 @@ public class Time {
 	/**
 	* @pre None
 	* @post None
-	* @return the value for the variable "second".
+	* @return Return second
 	*/
 	public int getSecond() {
 		return second;
@@ -96,8 +106,8 @@ public class Time {
 
 
 	/**
-	* @pre Have to pass in an int
-	* @post Sets the variable "second" to the passed in value
+	* @pre Valid integer second passed in
+	* @post Sets this.second to passed in second
 	* @return None
 	*/
 	public void setSecond(int second) {
@@ -166,8 +176,6 @@ public class Time {
 
 	}
 
-
-
 	/**
 	* @pre Have to pass in an boolean to determine the updates for the hour
 	* @post Updates the value for the variable "hour". Takes into consideration that the numbers restart from 12 to 1 for the 12 hour clock, and from 23 to 0 for the 24 hour clock.
@@ -175,27 +183,27 @@ public class Time {
 	*/
 	public void updateHours()
 	{
+		// 12 Hour
 		if (!isMilitary)
 		{
-			if (hour == 12)
-			{
-				hour = 1;
-			}
-			else
-			{
-				hour++;
-			}
+			// account for AM/PM by incrementing military hour
+			// and then checking changing AM/PM variable
+			if(militaryHour == 23) { militaryHour = 0; }
+			else { militaryHour++; }
+
+			if(militaryHour >= 12) { amPm = true; }
+			else { amPm = false; }
+
+			// increment hour accordingly
+			if (hour == 12) { hour = 1; }
+			else { hour++; }
 		}
+		// 24 hour
 		if (isMilitary)
 		{
-			if (hour == 23)
-			{
-				hour = 0;
-			}
-			else
-			{
-				hour++;
-			}
+			// increment hour accordingly
+			if (hour == 23) { hour = 0; }
+			else { hour++; }
 		}
 	}
 
