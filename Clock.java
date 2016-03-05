@@ -383,13 +383,13 @@
 	 			        	System.out.println("Found value: " + m.group(2) );
 	 			       		System.out.println("Found value: " + m.group(3) );
 
-	 			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
-	 						timerClock.setMinute(Integer.parseInt(m.group(2)));
-	 						timerClock.setHour(Integer.parseInt(m.group(1)));
+ 			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
+ 						timerClock.setMinute(Integer.parseInt(m.group(2)));
+ 						timerClock.setHour(Integer.parseInt(m.group(1)));
 
-	 						timerClock.updateSecondsTimer();
+ 						timerClock.updateSecondsTimer();
 
-	 						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
+ 						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
 
 	 			      	}
 	 				}
@@ -542,15 +542,15 @@
   		Timer t = new Timer(1000, new Listener());
   		t.start();
 
- 		Timer sw = new Timer(1000, new stopwatchListener());
- 		sw.start();
+ 			Timer sw = new Timer(1000, new StopwatchListener());
+ 			sw.start();
 
- 		Timer ti = new Timer(1000, new timerListener());
- 		ti.start();
+ 			Timer ti = new Timer(1000, new TimerListener());
+ 			ti.start();
 
  	}
 
- 	class stopwatchListener implements ActionListener {
+ 	class StopwatchListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
  			// check if stopwatch should be paused or not
  			if (!isStopWatchPaused){
@@ -560,7 +560,7 @@
  		}
  	}
 
- 	class timerListener implements ActionListener {
+ 	class TimerListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
@@ -609,6 +609,7 @@
  	public static void main(String[] args){
 
  			new Clock();
+			timerSet = false;
 
  	}
 
