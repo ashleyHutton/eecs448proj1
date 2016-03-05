@@ -416,16 +416,6 @@ public class Clock{
 
 	}
 
-	class DayOfWeekListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			week.calculateDayOfWeek();
-			dateF.setText(week.getDayOfWeek());
-		}
-	}
-
-
-
-
 	class stopwatchListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			stopwatch.updateSeconds();
@@ -453,7 +443,6 @@ public class Clock{
 	public static void main(String[] args){
 
 			new Clock();
-
 
 	}
 
