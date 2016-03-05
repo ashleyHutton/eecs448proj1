@@ -188,6 +188,8 @@ public class DayOfWeek {
     else if(m_dayOfWeek == "Tueday") { m_dayOfWeek = "Wednesday"; }
     else if(m_dayOfWeek == "Wednesday") { m_dayOfWeek = "Thursday"; }
     else { return ""; }
+
+    return "";
   }
 
 
