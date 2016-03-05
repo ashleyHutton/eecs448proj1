@@ -32,6 +32,7 @@ public class Clock{
 	JTextField timeF;
 	JTextField timerF;
 	JTextField stopWatchF;
+	JTextField dateF;
 	//	JTextField timeS;
 
 	// create buttons
@@ -52,6 +53,7 @@ public class Clock{
 	public Time timeClock = new Time();
 	public Time stopwatch = new Time();
 	public Time timerClock = new Time();
+	public DayOfWeek week = new DayOfWeek();
 
 	// default zoom and calendar date
 	private int m_zoomCounter = 3;
@@ -106,6 +108,9 @@ public class Clock{
 		switchToClock2 = new JButton("Back to Clock");
 		redisplayScreen = new JButton("Redisplay Screen");
 
+
+
+
 		// Create clock text field
 		timeF = new JTextField(10);
 		timeF.setEditable(false);
@@ -120,7 +125,12 @@ public class Clock{
 		stopWatchF = new JTextField(10);
 		stopWatchF.setEditable(false);
 		stopWatchF.setFont(new Font("Arial", Font.PLAIN, 30));
-		
+
+		// Create a calendar text field
+		dateF = new JTextField(10);
+		dateF.setEditable(false);
+		dateF.setFont(new Font("Arial", Font.PLAIN, 30));
+
 		// add button to panel
 		p.add(changeTime);
 		p.add(stopWatch);
@@ -264,12 +274,12 @@ public class Clock{
 		       		System.out.println("Found value: " + m.group(3) );
 
 		       		timerClock.setSecond(Integer.parseInt(m.group(3)));
-					timerClock.setMinute(Integer.parseInt(m.group(2)));
-					timerClock.setHour(Integer.parseInt(m.group(1)));
+							timerClock.setMinute(Integer.parseInt(m.group(2)));
+							timerClock.setHour(Integer.parseInt(m.group(1)));
 
-					timerClock.updateSecondsTimer();
+							timerClock.updateSecondsTimer();
 
-					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+							timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
 
 					// go to timer page
 					c1.show(panelCont, "3");
@@ -314,6 +324,11 @@ public class Clock{
 			    	// set the month and day to the given input
 			    	m_month = Integer.parseInt(m.group(1));
 			    	m_day = Integer.parseInt(m.group(2));
+
+						// Set member variables in DayOfWeek object and call calculateDayOfWeek
+						week.setMonth(m_month);
+						week.setDay(m_day);
+
 
 			    }
 
@@ -393,6 +408,15 @@ public class Clock{
 		ti.start();
 
 	}
+
+	class DayOfWeekListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			week.calculateDayOfWeek();
+			dateF.setText(week.getDayOfWeek());
+		}
+	}
+
+
 
 
 	class stopwatchListener implements ActionListener {
