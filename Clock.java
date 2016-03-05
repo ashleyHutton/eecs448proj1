@@ -60,7 +60,9 @@ public class Clock{
 	private int m_month = 1;
 	private int m_day = 3;
 
-	private Boolean isEnable;
+
+	private Boolean isEnable = true;
+
 
 	public Clock(){
 
@@ -229,6 +231,7 @@ public class Clock{
 		        	System.out.println("Found value: " + m.group(2) );
 		       		System.out.println("Found value: " + m.group(3) );
 
+
 					timeClock.setSecond(Integer.parseInt(m.group(3)));
 					timeClock.setMinute(Integer.parseInt(m.group(2)));
 					timeClock.setHour(Integer.parseInt(m.group(1)));
@@ -244,13 +247,17 @@ public class Clock{
 
 			public void actionPerformed(ActionEvent e){
 
-				stopwatch.setSecond(0);
-				stopwatch.setMinute(0);
-				stopwatch.setHour(0);
+				if (isEnable) {
+					stopwatch.setSecond(0);
+					stopwatch.setMinute(0);
+					stopwatch.setHour(0);
+					isEnable = false;
+				}
+
 
 				stopwatch.updateSeconds();
 
-				stopWatchF.setText(stopwatch.getHour() + ":" +stopwatch.getMinute() +":" + stopwatch.getSecond());
+				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d", stopwatch.getSecond()));
 
 				// go to stopwatch page
 				c1.show(panelCont, "2");
@@ -285,7 +292,7 @@ public class Clock{
 
 					timerClock.updateSecondsTimer();
 
-					timerF.setText(timerClock.getHour() + ":" +timerClock.getMinute() +":" + timerClock.getSecond());
+					timerF.setText(timerClock.getHour() + ":" + String.format("%02d", timerClock.getMinute()) +":" + String.format("%02d", timerClock.getSecond()));
 
 					// go to timer page
 					c1.show(panelCont, "3");
@@ -408,22 +415,23 @@ public class Clock{
 		Timer t = new Timer(1000, new Listener());
 		t.start();
 
-		Timer sw = new Timer(1000, new stopwatchListener());
+		Timer sw = new Timer(0, new StopWatchListener());
 		sw.start();
+		sw.stop();
 
-		Timer ti = new Timer(1000, new timerListener());
+		Timer ti = new Timer(1000, new TimerListener());
 		ti.start();
 
 	}
 
-	class stopwatchListener implements ActionListener {
+	class StopWatchListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			stopwatch.updateSeconds();
 			stopWatchF.setText(stopwatch.getHour() + ":" + String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d", stopwatch.getSecond()));
 		}
 	}
 
-	class timerListener implements ActionListener {
+	class TimerListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			timerClock.updateSecondsTimer();
 			timerF.setText(timerClock.getHour() + ":" + String.format("%02d", timerClock.getMinute()) + ":" + String.format("%02d", timerClock.getSecond()));
