@@ -47,6 +47,8 @@
   	private JButton switchToClock2;
   	private JButton redisplayScreen;
  	private JButton switchHourMode;
+ 	private JButton resetStopWatch;
+ 	private JButton pauseStopWatch;
 
   	// create objects for time, timer and stopwatch
   	public Time timeClock = new Time();
@@ -62,6 +64,7 @@
  	private Boolean isEnable;
  	private Boolean timerSet = false;
  	private Boolean badTimeInput = true;
+ 	private Boolean isStopWatchPaused = false;
 
  	public Clock(){
 
@@ -107,6 +110,8 @@
   		switchToClock2 = new JButton("Back to Clock");
   		redisplayScreen = new JButton("Redisplay Screen");
  		switchHourMode = new JButton("Switch Hour Mode");
+ 		pauseStopWatch = new JButton("Pause/Resume");
+ 		resetStopWatch = new JButton("Reset");
 
   		// Create clock text field
   		timeF = new JTextField(10);
@@ -156,6 +161,8 @@
 
  		stopWatchPanel.add(switchToClock1);
  		stopWatchPanel.add(stopWatchF);
+ 		stopWatchPanel.add(resetStopWatch);
+ 		stopWatchPanel.add(pauseStopWatch);
 
  		// create timer panel and add necessary fields and buttons
  		timerPanel = new JPanel();
@@ -179,6 +186,31 @@
  //		timeS = new JTextField(10);
  	//	timeS.setEditable(false);
  		//.setFont(new Font("Arial", Font.PLAIN, 30));
+
+ 		pauseStopWatch.addActionListener(new ActionListener(){
+
+ 			public void actionPerformed(ActionEvent e){
+
+ 				if (isStopWatchPaused){
+ 					isStopWatchPaused = false;
+ 				}
+ 				else{
+ 					isStopWatchPaused = true;
+ 				}
+
+ 			}
+ 		});
+
+ 		resetStopWatch.addActionListener(new ActionListener(){
+
+ 			public void actionPerformed(ActionEvent e){
+
+ 				stopwatch.setHour(0);
+ 				stopwatch.setMinute(0);
+ 				stopwatch.setSecond(0);
+
+ 			}
+ 		});
 
 
  		switchToClock1.addActionListener(new ActionListener(){
@@ -488,8 +520,11 @@
 
  	class stopwatchListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
- 			stopwatch.updateSeconds();
- 			stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
+ 			// check if stopwatch should be paused or not
+ 			if (!isStopWatchPaused){
+	 			stopwatch.updateSeconds();
+	 			stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
+ 			}
  		}
  	}
 
