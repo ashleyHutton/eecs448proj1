@@ -220,18 +220,21 @@ public class Clock{
 			    /** regular expression looking for the format "##:##:## in 24hr */
 			    String timePattern_24hr = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
+			    Pattern r;
+			    Matcher m;
+
 					// Check if military time
 
 			    // Create a Pattern object for appropriate hour Mode
 					if(timeClock.getIsMilitary()) {
-						Pattern r = Pattern.compile(timePattern_24hr);
+						r = Pattern.compile(timePattern_24hr);
 						// Now create matcher object.
-						Matcher m = r.matcher(userTime);
+						m = r.matcher(userTime);
 					}
 					else {
-						Pattern r = Pattern.compile(timePattern_12hr);
+						r = Pattern.compile(timePattern_12hr);
 						// Now create matcher object.
-						Matcher m = r.matcher(userTime);
+						m = r.matcher(userTime);
 					}
 
 
