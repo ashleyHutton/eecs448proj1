@@ -60,7 +60,7 @@
  	private int m_day = 3;
 
  	private Boolean isEnable;
- 	private Boolean timerSet = false;
+ 	private static Boolean timerSet;
  	private Boolean badTimeInput = true;
 
  	public Clock(){
@@ -288,7 +288,7 @@
 
  			public void actionPerformed(ActionEvent e){
 
- 				stopwatch.setSecond(0);
+ 				stopwatch.setSecond(-1);
  				stopwatch.setMinute(0);
  				stopwatch.setHour(0);
 
@@ -307,7 +307,9 @@
 
  				if (timerSet == false){
 
+					System.out.println("Before set " + timerSet);
  					timerSet = true;
+					System.out.println("After set " + timerSet);
 
  					String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
@@ -327,12 +329,10 @@
  			       		System.out.println("Found value: " + m.group(3) );
 
  			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
- 						timerClock.setMinute(Integer.parseInt(m.group(2)));
- 						timerClock.setHour(Integer.parseInt(m.group(1)));
+ 								timerClock.setMinute(Integer.parseInt(m.group(2)));
+ 								timerClock.setHour(Integer.parseInt(m.group(1)));
 
- 						timerClock.updateSecondsTimer();
-
- 						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
+ 								timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
 
  			      	}
  			        else {
@@ -478,22 +478,22 @@
   		Timer t = new Timer(1000, new Listener());
   		t.start();
 
- 		Timer sw = new Timer(1000, new stopwatchListener());
- 		sw.start();
+ 			Timer sw = new Timer(1000, new StopwatchListener());
+ 			sw.start();
 
- 		Timer ti = new Timer(1000, new timerListener());
- 		ti.start();
+ 			Timer ti = new Timer(1000, new TimerListener());
+ 			ti.start();
 
  	}
 
- 	class stopwatchListener implements ActionListener {
+ 	class StopwatchListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
  			stopwatch.updateSeconds();
  			stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
  		}
  	}
 
- 	class timerListener implements ActionListener {
+ 	class TimerListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
@@ -501,8 +501,9 @@
  				 timerClock.getMinute() == 0 &&
  				 timerClock.getSecond() == 0 ){
 
- 				timerSet = false;
-
+				System.out.println("When zero before " + timerSet);
+ 				 = false;
+				System.out.println("When zero after " + timerSet);
  			}
  			else {
 
@@ -542,6 +543,7 @@
  	public static void main(String[] args){
 
  			new Clock();
+			timerSet = false;
 
  	}
 
