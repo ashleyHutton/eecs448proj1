@@ -307,6 +307,10 @@ public class Time {
 			// increment hour accordingly
 			if (hour == 23) { hour = 0; }
 			else { hour++; }
+
+			if (hour == 0 && minute == 0 && second == 0){
+				isMidnight = true;
+			}
 		}
 	}
 
