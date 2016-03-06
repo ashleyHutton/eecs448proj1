@@ -255,6 +255,7 @@
  					// Check if military time
 
  			    // Create a Pattern object for appropriate hour Mode
+ 			    // while there is not good input
  			    while (!goodTimeInput){
 
  					if(timeClock.getIsMilitary()) {
@@ -324,7 +325,11 @@
  								timeClock.setHour(Integer.parseInt(m.group(1)));
 							}
  						}
+
  					}
+
+ 					// automatically popup change date prompt
+ 					changeDate.doClick();
 
  					goodTimeInput = false;
  				}
@@ -406,7 +411,6 @@
  					c1.show(panelCont, "3");
  			}
  		});
-
 
  		clearScreen.addActionListener(new ActionListener(){
 
