@@ -141,6 +141,15 @@ public class Time {
 	}
 
 	/**
+	* @pre Valid int milHour passed in
+	* @post Sets this.militaryHour to passed in milHour
+	* @return none
+	*/
+	public void setMilitaryHour(int milHour) {
+		this.militaryHour = milHour;
+	}
+
+	/**
 	* @pre None
 	* @post None
 	* @return military hour

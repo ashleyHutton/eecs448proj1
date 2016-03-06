@@ -550,6 +550,7 @@
 					// convert hours back to 12 hour mode
 					if(timeClock.getHour() > 12) {
 						timeClock.setHour(timeClock.getHour() - 12);
+            timeClock.setMilitaryHour(timeClock.getMilitaryHour() - 12);
 					}
  					timeClock.setIsMilitary(false);
 					System.out.println("Set military to false");
@@ -558,6 +559,7 @@
 					// convert hours back to 24 hour mode
 					if(timeClock.getAmPm() == true) {
 						timeClock.setHour(timeClock.getHour() + 12);
+            timeClock.setMilitaryHour(timeClock.getMilitaryHour() + 12);
 					}
  					timeClock.setIsMilitary(true);
 					System.out.println("Set miliary to true");
