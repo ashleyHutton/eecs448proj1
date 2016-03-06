@@ -16,7 +16,6 @@ public class Time {
 	private int militaryHour;
 	// true is pm false is am
 	private boolean amPm;
-	private DayOfWeek m_dayOfWeekOb;
 	private boolean isMidnight = false;
 	/**
 	* @pre  None
@@ -27,9 +26,9 @@ public class Time {
 	public Time()
 	{
 		Calendar currentTime = Calendar.getInstance();
-		hour = currentTime.get(Calendar.HOUR_OF_DAY);
-		minute = currentTime.get(Calendar.MINUTE);
-		second = currentTime.get(Calendar.SECOND);
+		hour = 0;
+		minute = 0;
+		second = 0;
 	}
 
 
@@ -72,7 +71,6 @@ public class Time {
 	public void setIsMidnight(boolean midnight) {
 		isMidnight = midnight;
 	}
-
 
 	/**
 	* @pre Valid boolean hourMode
@@ -299,7 +297,7 @@ public class Time {
 			else { hour++; }
 
 			if (hour == 0 && minute == 0 && second == 0){
-				isMidnight = true;f
+				isMidnight = true;
 			}
 		}
 	}
