@@ -302,7 +302,7 @@
  							System.out.println("Found value: " + m.group(3) );
  							System.out.println("Found value: " + m.group(4) );
 
- 							timeClock.setSecond(Integer.parseInt(m.group(3)));
+ 							timeClock.setSecond(Integer.parseInt(m.group(3))-1);
  							timeClock.setMinute(Integer.parseInt(m.group(2)));
  							timeClock.setHour(Integer.parseInt(m.group(1)));
 
@@ -328,7 +328,7 @@
  								System.out.println("Found value: " + m.group(3) );
 
 
- 								timeClock.setSecond(Integer.parseInt(m.group(3)));
+ 								timeClock.setSecond(Integer.parseInt(m.group(3))-1);
  								timeClock.setMinute(Integer.parseInt(m.group(2)));
  								timeClock.setHour(Integer.parseInt(m.group(1)));
 							}
@@ -357,7 +357,7 @@
 	 				stopWatchRunning = true;
 	 			}
 
-	 				stopwatch.updateSeconds();
+
 
  				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
 
@@ -405,7 +405,7 @@
  						timerClock.setMinute(Integer.parseInt(m.group(2)));
  						timerClock.setHour(Integer.parseInt(m.group(1)));
 
- 						timerClock.updateSecondsTimer();
+
 
  						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
 
