@@ -73,16 +73,6 @@ public class Time {
 		isMidnight = midnight;
 	}
 
-	/**
-	* @pre valid DayOfWeek object passed in
-	* @post m_dayOfWeekOb set to passed in dayOfWeekOb
-	* @return none
-	*/
-	public void setDateOb(DayOfWeek dayOfWeekOb) {
-		this.m_dayOfWeekOb = dayOfWeekOb;
-		System.out.println("Setting date ob");
-		System.out.println(m_dayOfWeekOb.getDayOfWeek() + "Booger");
-	}
 
 	/**
 	* @pre Valid boolean hourMode
@@ -309,7 +299,7 @@ public class Time {
 			else { hour++; }
 
 			if (hour == 0 && minute == 0 && second == 0){
-				isMidnight = true;
+				isMidnight = true;f
 			}
 		}
 	}
