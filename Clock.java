@@ -565,6 +565,11 @@
             timeClock.setMilitaryHour(12);
             timeClock.setAmPm(true);
           }
+          else if(timeClock.getHour() == 0) {
+            timeClock.setMilitaryHour(0);
+            timeClock.setAmPm(false);
+            timeClock.setHour(12);
+          }
           else {
             timeClock.setAmPm(false);
           }
@@ -580,6 +585,12 @@
 					  timeClock.setHour(timeClock.getHour());
             timeClock.setMilitaryHour(timeClock.getMilitaryHour() + 12);
 					}
+          else {
+            if(timeClock.getHour() == 12) {
+              timeClock.setHour(0);
+              timeClock.setMilitaryHour(0);
+            }
+          }
  					timeClock.setIsMilitary(true);
 					System.out.println("Set miliary to true");
  				}
