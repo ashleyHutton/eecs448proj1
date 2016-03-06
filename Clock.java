@@ -310,9 +310,13 @@
 							if(ampm.equals("pm") || ampm.equals("PM")) {
 								System.out.println("here");
  								timeClock.setAmPm(true);
+
+                timeClock.setMilitaryHour(Integer.parseInt(m.group(1)) + 12);
  							}
  							else if(ampm.equals("am") || ampm.equals("AM")) {
  								timeClock.setAmPm(false);
+
+                timeClock.setMilitaryHour(Integer.parseInt(m.group(1)));
  							}
 
  						}
@@ -331,6 +335,7 @@
  								timeClock.setSecond(Integer.parseInt(m.group(3))-1);
  								timeClock.setMinute(Integer.parseInt(m.group(2)));
  								timeClock.setHour(Integer.parseInt(m.group(1)));
+                timeClock.setMilitaryHour(Integer.parseInt(m.group(1)));
 							}
  						}
  					}
@@ -404,6 +409,7 @@
  			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
  						timerClock.setMinute(Integer.parseInt(m.group(2)));
  						timerClock.setHour(Integer.parseInt(m.group(1)));
+
 
 
 
@@ -544,21 +550,34 @@
  		switchHourMode.addActionListener(new ActionListener(){
 
  			public void actionPerformed(ActionEvent e){
-				// *** There is a bug here: you can click the button in either direction once,
-				// but the second click is unresponsive. i.e. won't switch back again
+				// 24 hour
  				if(timeClock.getIsMilitary()) {
 					// convert hours back to 12 hour mode
+          System.out.println("Hour: " + timeClock.getHour());
+          System.out.println("Military Hour: " + timeClock.getMilitaryHour());
 					if(timeClock.getHour() > 12) {
 						timeClock.setHour(timeClock.getHour() - 12);
+            timeClock.setAmPm(true);
             timeClock.setMilitaryHour(timeClock.getMilitaryHour() - 12);
 					}
+          // noon case
+          else if(timeClock.getHour() == 12) {
+            timeClock.setMilitaryHour(12);
+            timeClock.setAmPm(true);
+          }
+          else {
+            timeClock.setAmPm(false);
+          }
  					timeClock.setIsMilitary(false);
 					System.out.println("Set military to false");
  				}
+        // 12 hour
  				else {
 					// convert hours back to 24 hour mode
+          System.out.println("Hour: " + timeClock.getHour());
+          System.out.println("Military Hour: " + timeClock.getMilitaryHour());
 					if(timeClock.getAmPm() == true) {
-						timeClock.setHour(timeClock.getHour() + 12);
+					  timeClock.setHour(timeClock.getHour());
             timeClock.setMilitaryHour(timeClock.getMilitaryHour() + 12);
 					}
  					timeClock.setIsMilitary(true);
