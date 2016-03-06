@@ -185,7 +185,7 @@ public class DayOfWeek {
     else if(m_dayOfWeek == "Saturday") { m_dayOfWeek = "Sunday"; }
     else if(m_dayOfWeek == "Sunday") { m_dayOfWeek = "Monday"; }
     else if(m_dayOfWeek == "Monday") { m_dayOfWeek = "Tuesday"; }
-    else if(m_dayOfWeek == "Tueday") { m_dayOfWeek = "Wednesday"; }
+    else if(m_dayOfWeek == "Tuesday") { m_dayOfWeek = "Wednesday"; }
     else if(m_dayOfWeek == "Wednesday") { m_dayOfWeek = "Thursday"; }
     else { return ""; }
 
