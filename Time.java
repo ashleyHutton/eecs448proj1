@@ -17,7 +17,7 @@ public class Time {
 	// true is pm false is am
 	private boolean amPm;
 	private DayOfWeek m_dayOfWeekOb;
-
+	private boolean isMidnight = false;
 	/**
 	* @pre  None
 	* @post Creates a Time object with defalut values of 0 for the variables hour, minute, and second.
@@ -56,12 +56,32 @@ public class Time {
 	}
 
 	/**
+	* @pre None
+	* @post None
+	* @return return isMidnight
+	*/
+	public boolean getIsMidnight() {
+		return  isMidnight;
+	}
+
+	/**
+	* @pre passed in boolean midnight
+	* @post sets this.isMidnight to passed in midnight
+	* @return none
+	*/
+	public void setIsMidnight(boolean midnight) {
+		isMidnight = midnight;
+	}
+
+	/**
 	* @pre valid DayOfWeek object passed in
 	* @post m_dayOfWeekOb set to passed in dayOfWeekOb
 	* @return none
 	*/
 	public void setDateOb(DayOfWeek dayOfWeekOb) {
 		this.m_dayOfWeekOb = dayOfWeekOb;
+		System.out.println("Setting date ob");
+		System.out.println(m_dayOfWeekOb.getDayOfWeek() + "Booger");
 	}
 
 	/**
@@ -231,6 +251,7 @@ public class Time {
 		// 12 Hour
 		if (!isMilitary)
 		{
+			System.out.println("In 12 hour");
 			// account for AM/PM by incrementing military hour
 			// and then checking changing AM/PM variable
 			if(militaryHour == 23) { militaryHour = 0; }
@@ -239,6 +260,11 @@ public class Time {
 			if(militaryHour >= 12) { amPm = true; }
 			else { amPm = false; }
 
+			// if time switched from 24, it needs to be converted
+			if(hour > 12) {
+				System.out.println("Inside the check");
+				hour -= 12;
+			}
 			// increment hour accordingly
 			if (hour == 12) { hour = 1; }
 			else { hour++; }
@@ -250,11 +276,14 @@ public class Time {
 				}
 				else if(amPm == true) {
 					amPm = false;
+					isMidnight = true;
+					System.out.println("Changed midnight to true");
 					// here's where increment day is
-					System.out.println(m_dayOfWeekOb.getDayOfWeek());
-					m_dayOfWeekOb.incrementDayOfWeek();
+				//	System.out.println(m_dayOfWeekOb.getDayOfWeek());
+					//m_dayOfWeekOb.incrementDayOfWeek();
 				}
 			}
+
 		}
 		// 24 hour
 		if (isMilitary)

@@ -472,11 +472,23 @@
  		switchHourMode.addActionListener(new ActionListener(){
 
  			public void actionPerformed(ActionEvent e){
+				// *** There is a bug here: you can click the button in either direction once,
+				// but the second click is unresponsive. i.e. won't switch back again
  				if(timeClock.getIsMilitary()) {
+					// convert hours back to 12 hour mode
+					if(timeClock.getHour() > 12) {
+						timeClock.setHour(timeClock.getHour() - 12);
+					}
  					timeClock.setIsMilitary(false);
+					System.out.println("Set military to false");
  				}
  				else {
+					// convert hours back to 24 hour mode
+					if(timeClock.getAmPm() == true) {
+						timeClock.setHour(timeClock.getHour() + 12);
+					}
  					timeClock.setIsMilitary(true);
+					System.out.println("Set miliary to true");
  				}
 
  			}
@@ -529,10 +541,23 @@
   				// print time to Screen
  				// if 24 hour
  				if(timeClock.getIsMilitary()) {
+					if(timeClock.getIsMidnight()) {
+						week.incrementDayOfWeek();
+						timeClock.setIsMidnight(false);
+						System.out.println("Incremented day of week");
+					}
+					dateF.setText(week.getDayOfWeek());
  					timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond()));
  				}
  				// if 12 hour
  				else {
+					if(timeClock.getIsMidnight()) {
+						week.incrementDayOfWeek();
+						timeClock.setIsMidnight(false);
+						System.out.println(timeClock.getIsMidnight());
+						System.out.println("Incremented day of week");
+					}
+					dateF.setText(week.getDayOfWeek());
  					// if pm
  					if(timeClock.getAmPm()) {
  						timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond())
