@@ -60,6 +60,7 @@
  	private int m_zoomCounter = 3;
  	private int m_month = 1;
  	private int m_day = 3;
+	private String m_dayOfWeek;
 
  	private Boolean isEnable;
  	private Boolean timerSet = false;
@@ -83,6 +84,10 @@
  	public void setZoomCounter(int counter) {
  		m_zoomCounter = counter;
  	}
+
+	public String getClockDayOfWeek() {
+		return m_dayOfWeek;
+	}
 
 
  	public void gui(){
@@ -157,6 +162,8 @@
 
  		// calculate day of week from set month/day
   		week.calculateDayOfWeek();
+			m_dayOfWeek = week.getDayOfWeek();
+			System.out.println(week.getDayOfWeek());
   		dateF.setText(week.getDayOfWeek());
 
  		// create stopwatch panel and add necessary fields and buttons
@@ -255,7 +262,6 @@
  					// Check if military time
 
  			    // Create a Pattern object for appropriate hour Mode
- 			    // while there is not good input
  			    while (!goodTimeInput){
 
  					if(timeClock.getIsMilitary()) {
@@ -308,7 +314,9 @@
  							else if(ampm.equals("am") || ampm.equals("AM")) {
  								timeClock.setAmPm(false);
  							}
+
  						}
+
 					}
  					else {
  						if (m.find( )) {
@@ -325,7 +333,6 @@
  								timeClock.setHour(Integer.parseInt(m.group(1)));
 							}
  						}
-
  					}
 
  					// automatically popup change date prompt
@@ -333,6 +340,7 @@
 
  					goodTimeInput = false;
  				}
+
 
   		});
 
@@ -351,12 +359,12 @@
 
 	 				stopwatch.updateSeconds();
 
-	 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
+ 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
 
-	 				// go to stopwatch page
-	 				c1.show(panelCont, "2");
+ 				// go to stopwatch page
+ 				c1.show(panelCont, "2");
 
-	 				//JOptionPane.showInputDialog(null, "working!");
+ 				//JOptionPane.showInputDialog(null, "working!");
  			}
  		});
  		timer.addActionListener(new ActionListener(){
@@ -409,6 +417,7 @@
 
  					// go to timer page
  					c1.show(panelCont, "3");
+
  			}
  		});
 
@@ -535,17 +544,23 @@
  		switchHourMode.addActionListener(new ActionListener(){
 
  			public void actionPerformed(ActionEvent e){
+				// *** There is a bug here: you can click the button in either direction once,
+				// but the second click is unresponsive. i.e. won't switch back again
  				if(timeClock.getIsMilitary()) {
+					// convert hours back to 12 hour mode
+					if(timeClock.getHour() > 12) {
+						timeClock.setHour(timeClock.getHour() - 12);
+					}
  					timeClock.setIsMilitary(false);
+					System.out.println("Set military to false");
  				}
  				else {
-				/*	if(timeClock.getMilitaryHour() > 12) {
-						timeClock.setAmPm(true);
+					// convert hours back to 24 hour mode
+					if(timeClock.getAmPm() == true) {
+						timeClock.setHour(timeClock.getHour() + 12);
 					}
-					else {
-						timeClock.setAmPm(false);
-					}*/
  					timeClock.setIsMilitary(true);
+					System.out.println("Set miliary to true");
  				}
 
  			}
@@ -555,15 +570,17 @@
   		Timer t = new Timer(1000, new Listener());
   		t.start();
 
- 			Timer sw = new Timer(1000, new StopwatchListener());
- 			sw.start();
+ 		Timer sw = new Timer(1000, new stopwatchListener());
+ 		sw.start();
 
- 			Timer ti = new Timer(1000, new TimerListener());
- 			ti.start();
+ 		Timer ti = new Timer(1000, new timerListener());
+ 		ti.start();
+
+
 
  	}
 
- 	class StopwatchListener implements ActionListener {
+ 	class stopwatchListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
  			// check if stopwatch should be paused or not
  			if (!isStopWatchPaused){
@@ -573,7 +590,7 @@
  		}
  	}
 
- 	class TimerListener implements ActionListener {
+ 	class timerListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
@@ -599,31 +616,43 @@
   				// print time to Screen
  				// if 24 hour
  				if(timeClock.getIsMilitary()) {
+					if(timeClock.getIsMidnight()) {
+						week.incrementDayOfWeek();
+						timeClock.setIsMidnight(false);
+						System.out.println("Incremented day of week");
+					}
+					dateF.setText(week.getDayOfWeek());
  					timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond()));
  				}
  				// if 12 hour
  				else {
+					if(timeClock.getIsMidnight()) {
+						week.incrementDayOfWeek();
+						timeClock.setIsMidnight(false);
+						System.out.println(timeClock.getIsMidnight());
+						System.out.println("Incremented day of week");
+					}
+					dateF.setText(week.getDayOfWeek());
  					// if pm
  					if(timeClock.getAmPm()) {
  						timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond())
  						+ " " + "PM");
  					}
 					// if am
-					else if(!timeClock.getAmPm()) {
+					else {
  						timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond())
  						+ " " + "AM");
  					}
 
  				}
   			}
-  		}
+
+
+}
 
 
  	public static void main(String[] args){
-
- 			new Clock();
-			//timerSet = false;
-
+		new Clock();
  	}
 
  }
