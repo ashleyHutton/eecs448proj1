@@ -75,25 +75,48 @@
 
  	private Boolean isTimerPaused = false;
 
+  /**
+  * @pre None
+  * @post Creates a Clock object which calls the gui method.
+  * @return None
+  */
  	public Clock(){
 
  		gui();
 
  	}
-
+  /**
+  * @pre None
+  * @post None
+  * @return return m_zoomCounter
+  */
  	public int getZoomCounter() {
  		return m_zoomCounter;
  	}
 
+  /**
+  * @pre passed in int counter
+  * @post sets member variable m_zoomCounter to passed in counter
+  * @return None
+  */
  	public void setZoomCounter(int counter) {
  		m_zoomCounter = counter;
  	}
 
+  /**
+  * @pre None
+  * @post None
+  * @return return m_dayOfWeek
+  */
 	public String getClockDayOfWeek() {
 		return m_dayOfWeek;
 	}
 
-
+  /**
+  * @pre None
+  * @post creates window, panels, buttons, and defaults calendar
+  * @return None
+  */
  	public void gui(){
 
  		// Create window
@@ -202,12 +225,15 @@
  		c1.show(panelCont, "1");
 
 
- //		timeS = new JTextField(10);
- 	//	timeS.setEditable(false);
- 		//.setFont(new Font("Arial", Font.PLAIN, 30));
+
 
  		pauseStopWatch.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post resumes and pauses the stopwatch
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				if (isStopWatchPaused){
@@ -220,8 +246,14 @@
  			}
  		});
 
+
  		resetStopWatch.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post resets the stopwatch to 00:00:00
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				stopwatch.setHour(0);
@@ -233,6 +265,11 @@
 
  		pauseTimer.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post pauses/resumes the timer
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				if (isTimerPaused){
@@ -247,6 +284,11 @@
 
  		resetTimer.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post resets the timer to 00:00:00
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				timerSet = false;
@@ -257,6 +299,11 @@
 
  		switchToClock1.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post switches from stopwatch panel to main panel
+      * @return None
+      */
  				public void actionPerformed(ActionEvent e){
  					// return to main page
  					c1.show(panelCont, "1");
@@ -265,6 +312,11 @@
 
  		switchToClock2.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post switches from timer panel to main panel
+      * @return None
+      */
  				public void actionPerformed(ActionEvent e){
  					// return to main page
  					c1.show(panelCont, "1");
@@ -272,6 +324,11 @@
  		});
  		redisplayScreen.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post switches from redisplay panel to main panel
+      * @return None
+      */
  				public void actionPerformed(ActionEvent e){
  					// return to main page
  					c1.show(panelCont, "1");
@@ -280,6 +337,11 @@
 
  		changeTime.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post changes the time to the user specified time
+      * @return None
+      */
   			public void actionPerformed(ActionEvent e){
 
   				/** regular expression looking for the format "##:##:## AM/PM in 12hr */
@@ -327,11 +389,11 @@
 
  							String ampm = m.group(4);
 
- 							System.out.println("Found value: " + m.group(0) );
- 							System.out.println("Found value: " + m.group(1) );
- 							System.out.println("Found value: " + m.group(2) );
- 							System.out.println("Found value: " + m.group(3) );
- 							System.out.println("Found value: " + m.group(4) );
+ 						//	System.out.println("Found value: " + m.group(0) );
+ 						//	System.out.println("Found value: " + m.group(1) );
+ 						//	System.out.println("Found value: " + m.group(2) );
+ 						//	System.out.println("Found value: " + m.group(3) );
+ 						//	System.out.println("Found value: " + m.group(4) );
 
  							timeClock.setSecond(Integer.parseInt(m.group(3))-1);
  							timeClock.setMinute(Integer.parseInt(m.group(2)));
@@ -357,10 +419,10 @@
  						if (m.find( )) {
  								goodTimeInput = true;
 
- 								System.out.println("Found value: " + m.group(0) );
- 								System.out.println("Found value: " + m.group(1) );
- 								System.out.println("Found value: " + m.group(2) );
- 								System.out.println("Found value: " + m.group(3) );
+ 							//	System.out.println("Found value: " + m.group(0) );
+ 							//	System.out.println("Found value: " + m.group(1) );
+ 							//	System.out.println("Found value: " + m.group(2) );
+ 							//	System.out.println("Found value: " + m.group(3) );
 
 
  								timeClock.setSecond(Integer.parseInt(m.group(3))-1);
@@ -382,6 +444,11 @@
 
   		stopWatch.addActionListener(new ActionListener(){
 
+        /**
+        * @pre passed in ActionEvent e
+        * @post starts the stopwatch and prints the stopwatch
+        * @return None
+        */
  			public void actionPerformed(ActionEvent e){
 
  				if (!stopWatchRunning){
@@ -404,6 +471,12 @@
  			}
  		});
  		timer.addActionListener(new ActionListener(){
+
+      /**
+      * @pre passed in ActionEvent e
+      * @post sets the timer to the user specified time and prints the timer
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				if (timerSet == false){
@@ -432,10 +505,10 @@
 
 	 			    		goodTimerInput = true;
 
-	 			        	System.out.println("Found value: " + m.group(0) );
-	 			        	System.out.println("Found value: " + m.group(1) );
-	 			        	System.out.println("Found value: " + m.group(2) );
-	 			       		System.out.println("Found value: " + m.group(3) );
+	 			        	//System.out.println("Found value: " + m.group(0) );
+	 			        	//System.out.println("Found value: " + m.group(1) );
+	 			        	//System.out.println("Found value: " + m.group(2) );
+	 			       		//System.out.println("Found value: " + m.group(3) );
 
  			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
  						timerClock.setMinute(Integer.parseInt(m.group(2)));
@@ -460,6 +533,11 @@
 
  		clearScreen.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post switches from clearScreen panel to main panel
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				c1.show(panelCont, "4");
@@ -467,6 +545,11 @@
  		});
  		changeDate.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post sets the day to the user specified date and prints the day
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				while (!goodCalendarInput){
@@ -523,6 +606,11 @@
  		});
  		zoomIn.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post makes the clock text bigger
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
  				int counter = getZoomCounter();
 
@@ -550,6 +638,11 @@
  		});
  		zoomOut.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post makes the clock text smaller
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 
  				int counter = getZoomCounter();
@@ -580,6 +673,11 @@
 
  		switchHourMode.addActionListener(new ActionListener(){
 
+      /**
+      * @pre passed in ActionEvent e
+      * @post switches from 12hr mode to 24hr mode and vice versa
+      * @return None
+      */
  			public void actionPerformed(ActionEvent e){
 				// 24 hour
  				if(timeClock.getIsMilitary()) {
@@ -644,6 +742,11 @@
  	}
 
  	class stopwatchListener implements ActionListener {
+    /**
+    * @pre passed in ActionEvent e
+    * @post increments the stopwatch and prints the stopwatch
+    * @return None
+    */
  		public void actionPerformed(ActionEvent e) {
  			// check if stopwatch should be paused or not
  			if (!isStopWatchPaused){
@@ -654,6 +757,12 @@
  	}
 
  	class timerListener implements ActionListener {
+
+    /**
+    * @pre passed in ActionEvent e
+    * @post decrements the timer and prints the timer
+    * @return None
+    */
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
@@ -678,6 +787,12 @@
 
 
  	class Listener implements ActionListener {
+
+    /**
+    * @pre passed in ActionEvent e
+    * @post increments the clock and prints the clock
+    * @return None
+    */
   		public void actionPerformed(ActionEvent e) {
   				timeClock.updateSeconds();
   				// print time to Screen
@@ -717,7 +832,11 @@
 
 }
 
-
+/**
+* @pre None
+* @post runs the clock
+* @return None
+*/
  	public static void main(String[] args){
 		new Clock();
  	}
