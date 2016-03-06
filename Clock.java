@@ -218,7 +218,7 @@
 
  				stopwatch.setHour(0);
  				stopwatch.setMinute(0);
- 				stopwatch.setSecond(0);
+ 				stopwatch.setSecond(0-1);
 
  			}
  		});
