@@ -582,7 +582,7 @@
           System.out.println("Hour: " + timeClock.getHour());
           System.out.println("Military Hour: " + timeClock.getMilitaryHour());
 					if(timeClock.getAmPm() == true) {
-					  timeClock.setHour(timeClock.getHour());
+					  timeClock.setHour(timeClock.getHour()+12);
             timeClock.setMilitaryHour(timeClock.getMilitaryHour() + 12);
 					}
           else {
