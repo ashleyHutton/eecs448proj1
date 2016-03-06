@@ -49,6 +49,8 @@
  	private JButton switchHourMode;
  	private JButton resetStopWatch;
  	private JButton pauseStopWatch;
+ 	private JButton pauseTimer;
+ 	private JButton resetTimer;
 
   	// create objects for time, timer and stopwatch
   	public Time timeClock = new Time();
@@ -70,6 +72,8 @@
  	private Boolean goodTimeInput = false;
  	private Boolean goodTimerInput = false;
  	private Boolean goodCalendarInput = false;
+
+ 	private Boolean isTimerPaused = false;
 
  	public Clock(){
 
@@ -121,6 +125,8 @@
  		switchHourMode = new JButton("Switch Hour Mode");
  		pauseStopWatch = new JButton("Pause/Resume");
  		resetStopWatch = new JButton("Reset");
+ 		pauseTimer = new JButton("Pause/Resume");
+ 		resetTimer = new JButton("Reset");
 
   		// Create clock text field
   		timeF = new JTextField(10);
@@ -180,6 +186,8 @@
  		timerPanel.setBackground(Color.WHITE);
 
  		timerPanel.add(switchToClock2);
+ 		timerPanel.add(pauseTimer);
+ 		timerPanel.add(resetTimer);
  		timerPanel.add(timerF);
 
  		// create panel to hide the display
@@ -223,6 +231,29 @@
  			}
  		});
 
+ 		pauseTimer.addActionListener(new ActionListener(){
+
+ 			public void actionPerformed(ActionEvent e){
+
+ 				if (isTimerPaused){
+ 					isTimerPaused = false;
+ 				}
+ 				else{
+ 					isTimerPaused = true;
+ 				}
+
+ 			}
+ 		});
+
+ 		resetTimer.addActionListener(new ActionListener(){
+
+ 			public void actionPerformed(ActionEvent e){
+
+ 				timerSet = false;
+ 				timer.doClick();
+
+ 			}
+ 		});
 
  		switchToClock1.addActionListener(new ActionListener(){
 
@@ -389,7 +420,7 @@
 	 					}
 
 	 				    /** regular expression looking for the format "##:##:## in 24hr */
-	 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+	 				    String timerPattern = "(^[0-9]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
 	 				    // Create a Pattern object
 	 				    Pattern r = Pattern.compile(timerPattern);
@@ -626,6 +657,7 @@
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
+
  			if ( timerClock.getHour() == 0 &&
  				 timerClock.getMinute() == 0 &&
  				 timerClock.getSecond() == 0 ){
@@ -635,8 +667,11 @@
  			}
  			else {
 
- 				timerClock.updateSecondsTimer();
- 				timerF.setText(timerClock.getHour() + ":" + String.format("%02d",timerClock.getMinute()) + ":" + String.format("%02d",timerClock.getSecond()));
+ 				if (!isTimerPaused){
+
+ 					timerClock.updateSecondsTimer();
+ 					timerF.setText(timerClock.getHour() + ":" + String.format("%02d",timerClock.getMinute()) + ":" + String.format("%02d",timerClock.getSecond()));
+ 				}
  			}
  		}
  	}
