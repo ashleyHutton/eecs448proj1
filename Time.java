@@ -16,7 +16,7 @@ public class Time {
 	private int militaryHour;
 	// true is pm false is am
 	private boolean amPm;
-
+	private DayOfWeek m_dayOfWeekOb;
 
 	/**
 	* @pre  None
@@ -56,9 +56,18 @@ public class Time {
 	}
 
 	/**
-	* @pre None
-	* @post None
-	* @return return amPm
+	* @pre valid DayOfWeek object passed in
+	* @post m_dayOfWeekOb set to passed in dayOfWeekOb
+	* @return none
+	*/
+	public void setDateOb(DayOfWeek dayOfWeekOb) {
+		this.m_dayOfWeekOb = dayOfWeekOb;
+	}
+
+	/**
+	* @pre Valid boolean hourMode
+	* @post sets this.amPm to passed in hourMode
+	* @return None
 	*/
 	public void setAmPm(boolean hourMode) {
 		this.amPm = hourMode;
@@ -236,8 +245,15 @@ public class Time {
 
 			// switch am/pm at midnight or noon
 			if(hour == 12 && minute == 0 && second == 0) {
-				if(amPm == false) { amPm = true; System.out.println("Fricken switching to pm");}
-				else if(amPm == true) { amPm = false; System.out.println("Fricken switching to am");}
+				if(amPm == false) {
+					amPm = true;
+				}
+				else if(amPm == true) {
+					amPm = false;
+					// here's where increment day is
+					System.out.println(m_dayOfWeekOb.getDayOfWeek());
+					m_dayOfWeekOb.incrementDayOfWeek();
+				}
 			}
 		}
 		// 24 hour
@@ -280,6 +296,4 @@ public class Time {
 			}
 		}
 	}
-
-
 }

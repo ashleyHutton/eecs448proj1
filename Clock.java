@@ -47,8 +47,6 @@
   	private JButton switchToClock2;
   	private JButton redisplayScreen;
  	private JButton switchHourMode;
- 	private JButton resetStopWatch;
- 	private JButton pauseStopWatch;
 
   	// create objects for time, timer and stopwatch
   	public Time timeClock = new Time();
@@ -60,15 +58,11 @@
  	private int m_zoomCounter = 3;
  	private int m_month = 1;
  	private int m_day = 3;
+	private String m_dayOfWeek;
 
  	private Boolean isEnable;
  	private Boolean timerSet = false;
- 	private Boolean isStopWatchPaused = false;
- 	private Boolean stopWatchRunning = false;
-
- 	private Boolean goodTimeInput = false;
- 	private Boolean goodTimerInput = false;
- 	private Boolean goodCalendarInput = false;
+ 	private Boolean badTimeInput = true;
 
  	public Clock(){
 
@@ -83,6 +77,10 @@
  	public void setZoomCounter(int counter) {
  		m_zoomCounter = counter;
  	}
+
+	public String getClockDayOfWeek() {
+		return m_dayOfWeek;
+	}
 
 
  	public void gui(){
@@ -114,8 +112,6 @@
   		switchToClock2 = new JButton("Back to Clock");
   		redisplayScreen = new JButton("Redisplay Screen");
  		switchHourMode = new JButton("Switch Hour Mode");
- 		pauseStopWatch = new JButton("Pause/Resume");
- 		resetStopWatch = new JButton("Reset");
 
   		// Create clock text field
   		timeF = new JTextField(10);
@@ -157,6 +153,8 @@
 
  		// calculate day of week from set month/day
   		week.calculateDayOfWeek();
+			m_dayOfWeek = week.getDayOfWeek();
+			System.out.println(week.getDayOfWeek());
   		dateF.setText(week.getDayOfWeek());
 
  		// create stopwatch panel and add necessary fields and buttons
@@ -165,8 +163,6 @@
 
  		stopWatchPanel.add(switchToClock1);
  		stopWatchPanel.add(stopWatchF);
- 		stopWatchPanel.add(resetStopWatch);
- 		stopWatchPanel.add(pauseStopWatch);
 
  		// create timer panel and add necessary fields and buttons
  		timerPanel = new JPanel();
@@ -190,31 +186,6 @@
  //		timeS = new JTextField(10);
  	//	timeS.setEditable(false);
  		//.setFont(new Font("Arial", Font.PLAIN, 30));
-
- 		pauseStopWatch.addActionListener(new ActionListener(){
-
- 			public void actionPerformed(ActionEvent e){
-
- 				if (isStopWatchPaused){
- 					isStopWatchPaused = false;
- 				}
- 				else{
- 					isStopWatchPaused = true;
- 				}
-
- 			}
- 		});
-
- 		resetStopWatch.addActionListener(new ActionListener(){
-
- 			public void actionPerformed(ActionEvent e){
-
- 				stopwatch.setHour(0);
- 				stopwatch.setMinute(0);
- 				stopwatch.setSecond(0);
-
- 			}
- 		});
 
 
  		switchToClock1.addActionListener(new ActionListener(){
@@ -255,15 +226,8 @@
  					// Check if military time
 
  			    // Create a Pattern object for appropriate hour Mode
- 			    while (!goodTimeInput){
-
  					if(timeClock.getIsMilitary()) {
  						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
-
- 						if (userTime ==  null){
- 								System.out.println("Bad");
-								return;
-	 					}
 
  						r = Pattern.compile(timePattern_24hr);
  						// Now create matcher object.
@@ -271,11 +235,6 @@
  					}
  					else {
  						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
-
- 						if (userTime ==  null){
-							System.out.println("Bad");
-							return;
-	 					}
 
  						r = Pattern.compile(timePattern_12hr);
  						// Now create matcher object.
@@ -285,7 +244,6 @@
  					// if it's 12 hour mode, also set AM/PM
  					if(!timeClock.getIsMilitary()) {
  						if (m.find()){
- 							goodTimeInput = true;
 
  							String ampm = m.group(4);
 
@@ -307,12 +265,12 @@
  							else if(ampm.equals("am") || ampm.equals("AM")) {
  								timeClock.setAmPm(false);
  							}
+
  						}
+
 					}
  					else {
  						if (m.find( )) {
- 								goodTimeInput = true;
-
  								System.out.println("Found value: " + m.group(0) );
  								System.out.println("Found value: " + m.group(1) );
  								System.out.println("Found value: " + m.group(2) );
@@ -323,11 +281,13 @@
  								timeClock.setMinute(Integer.parseInt(m.group(2)));
  								timeClock.setHour(Integer.parseInt(m.group(1)));
 							}
+							else {
+ 								System.out.println("NO MATCH");
+ 							}
  						}
+
  					}
 
- 					goodTimeInput = false;
- 				}
 
   		});
 
@@ -335,23 +295,18 @@
 
  			public void actionPerformed(ActionEvent e){
 
- 				if (!stopWatchRunning){
+ 				stopwatch.setSecond(0);
+ 				stopwatch.setMinute(0);
+ 				stopwatch.setHour(0);
 
-	 				stopwatch.setSecond(0);
-	 				stopwatch.setMinute(0);
-	 				stopwatch.setHour(0);
+ 				stopwatch.updateSeconds();
 
-	 				stopWatchRunning = true;
-	 			}
+ 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
 
-	 				stopwatch.updateSeconds();
+ 				// go to stopwatch page
+ 				c1.show(panelCont, "2");
 
-	 				stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d", stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
-
-	 				// go to stopwatch page
-	 				c1.show(panelCont, "2");
-
-	 				//JOptionPane.showInputDialog(null, "working!");
+ 				//JOptionPane.showInputDialog(null, "working!");
  			}
  		});
  		timer.addActionListener(new ActionListener(){
@@ -361,27 +316,22 @@
 
  					timerSet = true;
 
- 					while (!goodTimerInput){
+ 					String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
-	 					String userTimer = JOptionPane.showInputDialog("Enter the time:");
+ 				    /** regular expression looking for the format "##:##:## in 24hr */
+ 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
-	 				    /** regular expression looking for the format "##:##:## in 24hr */
-	 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
+ 				    // Create a Pattern object
+ 				    Pattern r = Pattern.compile(timerPattern);
 
-	 				    // Create a Pattern object
-	 				    Pattern r = Pattern.compile(timerPattern);
+ 				      // Now create matcher object.
+ 				    Matcher m = r.matcher(userTimer);
 
-	 				      // Now create matcher object.
-	 				    Matcher m = r.matcher(userTimer);
-
-	 			    	if (m.find( )) {
-
-	 			    		goodTimerInput = true;
-
-	 			        	System.out.println("Found value: " + m.group(0) );
-	 			        	System.out.println("Found value: " + m.group(1) );
-	 			        	System.out.println("Found value: " + m.group(2) );
-	 			       		System.out.println("Found value: " + m.group(3) );
+ 			    	if (m.find( )) {
+ 			        	System.out.println("Found value: " + m.group(0) );
+ 			        	System.out.println("Found value: " + m.group(1) );
+ 			        	System.out.println("Found value: " + m.group(2) );
+ 			       		System.out.println("Found value: " + m.group(3) );
 
  			       		timerClock.setSecond(Integer.parseInt(m.group(3)));
  						timerClock.setMinute(Integer.parseInt(m.group(2)));
@@ -391,14 +341,15 @@
 
  						timerF.setText(timerClock.getHour() + ":" +String.format("%02d",timerClock.getMinute()) +":" + String.format("%02d",timerClock.getSecond()));
 
-	 			      	}
-	 				}
-
-	 				goodTimerInput = false;
+ 			      	}
+ 			        else {
+ 			        	System.out.println("NO MATCH");
+ 					}
  				}
 
  					// go to timer page
  					c1.show(panelCont, "3");
+
  			}
  		});
 
@@ -414,52 +365,51 @@
 
  			public void actionPerformed(ActionEvent e){
 
- 				while (!goodCalendarInput){
+ 				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
 
-	 				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
+ 				// regular expression to find the date in the format MM/DD
+ 				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
 
-	 				// regular expression to find the date in the format MM/DD
-	 				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
+ 				// Create a Pattern object
+ 			    Pattern r = Pattern.compile(datePattern);
 
-	 				// Create a Pattern object
-	 			    Pattern r = Pattern.compile(datePattern);
+ 			    // Now create matcher object.
+ 			    Matcher m = r.matcher(userDate);
 
-	 			    // Now create matcher object.
-	 			    Matcher m = r.matcher(userDate);
+ 			    if (m.find()){
 
-	 			    if (m.find()){
+ 			    	System.out.println(m.group(0));
+ 			    	System.out.println(m.group(1));
+ 			    	System.out.println(m.group(2));
 
-	 			    	goodCalendarInput = true;
+ 			    	// set the month and day to the given input
+ 			    	m_month = Integer.parseInt(m.group(1));
+ 			    	m_day = Integer.parseInt(m.group(2));
 
-	 			    	System.out.println(m.group(0));
-	 			    	System.out.println(m.group(1));
-	 			    	System.out.println(m.group(2));
+ 			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
+ 			    		( m_month == 4 && m_day == 31 ) ||
+ 			    		( m_month == 6 && m_day == 31 ) ||
+ 			    		( m_month == 9 && m_day == 31 ) ||
+ 			    		( m_month == 11 && m_day == 31)){
 
-	 			    	// set the month and day to the given input
-	 			    	m_month = Integer.parseInt(m.group(1));
-	 			    	m_day = Integer.parseInt(m.group(2));
+ 			    		System.out.println("Bad Input");
+ 			    	}
+ 			    	else {
 
-	 			    	if (( m_month == 2 && (m_day == 30 || m_day == 31)) ||
-	 			    		( m_month == 4 && m_day == 31 ) ||
-	 			    		( m_month == 6 && m_day == 31 ) ||
-	 			    		( m_month == 9 && m_day == 31 ) ||
-	 			    		( m_month == 11 && m_day == 31)){
+ 						// Set member variables in DayOfWeek object and call calculateDayOfWeek
+ 						week.setMonth(m_month);
+ 						week.setDay(m_day);
 
-	 			    		System.out.println("Bad Input");
-	 			    	}
-	 			    	else {
+ 						week.calculateDayOfWeek();
+						timeClock.setDateOb(week);
+ 						dateF.setText(week.getDayOfWeek());
+ 					}
+ 				}
 
-	 						// Set member variables in DayOfWeek object and call calculateDayOfWeek
-	 						week.setMonth(m_month);
-	 						week.setDay(m_day);
+ 			    else{
 
-	 						week.calculateDayOfWeek();
-	 						dateF.setText(week.getDayOfWeek());
-	 					}
-	 				}
-	 			}
-
-	 			goodCalendarInput = false;
+ 			    	System.out.println("No match");
+ 			    }
  			}
  		});
  		zoomIn.addActionListener(new ActionListener(){
@@ -526,12 +476,6 @@
  					timeClock.setIsMilitary(false);
  				}
  				else {
-				/*	if(timeClock.getMilitaryHour() > 12) {
-						timeClock.setAmPm(true);
-					}
-					else {
-						timeClock.setAmPm(false);
-					}*/
  					timeClock.setIsMilitary(true);
  				}
 
@@ -542,25 +486,24 @@
   		Timer t = new Timer(1000, new Listener());
   		t.start();
 
- 			Timer sw = new Timer(1000, new StopwatchListener());
- 			sw.start();
+ 		Timer sw = new Timer(1000, new stopwatchListener());
+ 		sw.start();
 
- 			Timer ti = new Timer(1000, new TimerListener());
- 			ti.start();
+ 		Timer ti = new Timer(1000, new timerListener());
+ 		ti.start();
+
+
 
  	}
 
- 	class StopwatchListener implements ActionListener {
+ 	class stopwatchListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
- 			// check if stopwatch should be paused or not
- 			if (!isStopWatchPaused){
-	 			stopwatch.updateSeconds();
-	 			stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
- 			}
+ 			stopwatch.updateSeconds();
+ 			stopWatchF.setText(stopwatch.getHour() + ":" +String.format("%02d",stopwatch.getMinute()) +":" + String.format("%02d",stopwatch.getSecond()));
  		}
  	}
 
- 	class TimerListener implements ActionListener {
+ 	class timerListener implements ActionListener {
  		public void actionPerformed(ActionEvent e) {
 
  			// check that timer isn't at 0
@@ -596,21 +539,20 @@
  						+ " " + "PM");
  					}
 					// if am
-					else if(!timeClock.getAmPm()) {
+					else {
  						timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond())
  						+ " " + "AM");
  					}
 
  				}
   			}
-  		}
+
+
+}
 
 
  	public static void main(String[] args){
-
- 			new Clock();
-			timerSet = false;
-
+		new Clock();
  	}
 
  }
