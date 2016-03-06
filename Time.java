@@ -16,7 +16,6 @@ public class Time {
 	private int militaryHour;
 	// true is pm false is am
 	private boolean amPm;
-	private DayOfWeek m_dayOfWeekOb;
 	private boolean isMidnight = false;
 	/**
 	* @pre  None
@@ -27,9 +26,9 @@ public class Time {
 	public Time()
 	{
 		Calendar currentTime = Calendar.getInstance();
-		hour = currentTime.get(Calendar.HOUR_OF_DAY);
-		minute = currentTime.get(Calendar.MINUTE);
-		second = currentTime.get(Calendar.SECOND);
+		hour = 0;
+		minute = 0;
+		second = 0;
 	}
 
 
@@ -71,17 +70,6 @@ public class Time {
 	*/
 	public void setIsMidnight(boolean midnight) {
 		isMidnight = midnight;
-	}
-
-	/**
-	* @pre valid DayOfWeek object passed in
-	* @post m_dayOfWeekOb set to passed in dayOfWeekOb
-	* @return none
-	*/
-	public void setDateOb(DayOfWeek dayOfWeekOb) {
-		this.m_dayOfWeekOb = dayOfWeekOb;
-		System.out.println("Setting date ob");
-		System.out.println(m_dayOfWeekOb.getDayOfWeek() + "Booger");
 	}
 
 	/**
@@ -260,7 +248,7 @@ public class Time {
 		// 12 Hour
 		if (!isMilitary)
 		{
-			System.out.println("In 12 hour");
+			//System.out.println("In 12 hour");
 			// account for AM/PM by incrementing military hour
 			// and then checking changing AM/PM variable
 			if(militaryHour == 23) { militaryHour = 0; }
@@ -271,7 +259,7 @@ public class Time {
 
 			// if time switched from 24, it needs to be converted
 			if(hour > 12) {
-				System.out.println("Inside the check");
+				//System.out.println("Inside the check");
 				hour -= 12;
 			}
 			// increment hour accordingly
@@ -286,7 +274,7 @@ public class Time {
 				else if(amPm == true) {
 					amPm = false;
 					isMidnight = true;
-					System.out.println("Changed midnight to true");
+					//System.out.println("Changed midnight to true");
 					// here's where increment day is
 				//	System.out.println(m_dayOfWeekOb.getDayOfWeek());
 					//m_dayOfWeekOb.incrementDayOfWeek();
@@ -307,6 +295,10 @@ public class Time {
 			// increment hour accordingly
 			if (hour == 23) { hour = 0; }
 			else { hour++; }
+
+			if (hour == 0 && minute == 0 && second == 0){
+				isMidnight = true;
+			}
 		}
 	}
 
