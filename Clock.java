@@ -260,8 +260,8 @@
  					if(timeClock.getIsMilitary()) {
  						String userTime = JOptionPane.showInputDialog("Enter the time (24 Hour):");
 
+ 						// if user clicks cancel, return
  						if (userTime ==  null){
- 								System.out.println("Bad");
 								return;
 	 					}
 
@@ -272,8 +272,8 @@
  					else {
  						String userTime = JOptionPane.showInputDialog("Enter the time (12 Hour):");
 
+ 						// if user clicks cancel, return
  						if (userTime ==  null){
-							System.out.println("Bad");
 							return;
 	 					}
 
@@ -365,6 +365,11 @@
 
 	 					String userTimer = JOptionPane.showInputDialog("Enter the time:");
 
+	 					if (userTimer == null){
+	 						timerSet = false;
+	 						return;
+	 					}
+
 	 				    /** regular expression looking for the format "##:##:## in 24hr */
 	 				    String timerPattern = "(^[01]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$";
 
@@ -417,6 +422,10 @@
  				while (!goodCalendarInput){
 
 	 				String userDate = JOptionPane.showInputDialog("Enter the Date (MM/DD):");
+
+	 				if (userDate == null){
+	 					return;
+	 				}
 
 	 				// regular expression to find the date in the format MM/DD
 	 				String datePattern = "(^0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$";
@@ -609,7 +618,7 @@
  	public static void main(String[] args){
 
  			new Clock();
-			timerSet = false;
+			//timerSet = false;
 
  	}
 
