@@ -248,7 +248,7 @@ public class Time {
 		// 12 Hour
 		if (!isMilitary)
 		{
-			System.out.println("In 12 hour");
+			//System.out.println("In 12 hour");
 			// account for AM/PM by incrementing military hour
 			// and then checking changing AM/PM variable
 			if(militaryHour == 23) { militaryHour = 0; }
@@ -259,7 +259,7 @@ public class Time {
 
 			// if time switched from 24, it needs to be converted
 			if(hour > 12) {
-				System.out.println("Inside the check");
+				//System.out.println("Inside the check");
 				hour -= 12;
 			}
 			// increment hour accordingly
@@ -274,7 +274,7 @@ public class Time {
 				else if(amPm == true) {
 					amPm = false;
 					isMidnight = true;
-					System.out.println("Changed midnight to true");
+					//System.out.println("Changed midnight to true");
 					// here's where increment day is
 				//	System.out.println(m_dayOfWeekOb.getDayOfWeek());
 					//m_dayOfWeekOb.incrementDayOfWeek();
