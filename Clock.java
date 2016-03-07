@@ -192,7 +192,7 @@
  		// calculate day of week from set month/day
   		week.calculateDayOfWeek();
 			m_dayOfWeek = week.getDayOfWeek();
-			System.out.println(week.getDayOfWeek());
+		//	System.out.println(week.getDayOfWeek());
   		dateF.setText(week.getDayOfWeek());
 
  		// create stopwatch panel and add necessary fields and buttons
@@ -401,7 +401,7 @@
 
 
 							if(ampm.equals("pm") || ampm.equals("PM")) {
-								System.out.println("here");
+								//System.out.println("here");
  								timeClock.setAmPm(true);
 
                 timeClock.setMilitaryHour(Integer.parseInt(m.group(1)) + 12);
@@ -573,9 +573,9 @@
 
 	 			    	goodCalendarInput = true;
 
-	 			    	System.out.println(m.group(0));
-	 			    	System.out.println(m.group(1));
-	 			    	System.out.println(m.group(2));
+	 			    	//System.out.println(m.group(0));
+	 			    	//System.out.println(m.group(1));
+	 			    	//System.out.println(m.group(2));
 
 	 			    	// set the month and day to the given input
 	 			    	m_month = Integer.parseInt(m.group(1));
@@ -587,7 +587,7 @@
 	 			    		( m_month == 9 && m_day == 31 ) ||
 	 			    		( m_month == 11 && m_day == 31)){
 
-	 			    		System.out.println("Bad Input");
+	 			    	//	System.out.println("Bad Input");
 	 			    	}
 	 			    	else {
 
@@ -682,8 +682,8 @@
 				// 24 hour
  				if(timeClock.getIsMilitary()) {
 					// convert hours back to 12 hour mode
-          System.out.println("Hour: " + timeClock.getHour());
-          System.out.println("Military Hour: " + timeClock.getMilitaryHour());
+        //  System.out.println("Hour: " + timeClock.getHour());
+        //  System.out.println("Military Hour: " + timeClock.getMilitaryHour());
 					if(timeClock.getHour() > 12) {
 						timeClock.setHour(timeClock.getHour() - 12);
             timeClock.setAmPm(true);
@@ -703,13 +703,13 @@
             timeClock.setAmPm(false);
           }
  					timeClock.setIsMilitary(false);
-					System.out.println("Set military to false");
+				//	System.out.println("Set military to false");
  				}
         // 12 hour
  				else {
 					// convert hours back to 24 hour mode
-          System.out.println("Hour: " + timeClock.getHour());
-          System.out.println("Military Hour: " + timeClock.getMilitaryHour());
+        //  System.out.println("Hour: " + timeClock.getHour());
+        //  System.out.println("Military Hour: " + timeClock.getMilitaryHour());
 					if(timeClock.getAmPm() == true) {
 					  timeClock.setHour(timeClock.getHour()+12);
             timeClock.setMilitaryHour(timeClock.getMilitaryHour() + 12);
@@ -721,7 +721,7 @@
             }
           }
  					timeClock.setIsMilitary(true);
-					System.out.println("Set miliary to true");
+				//	System.out.println("Set miliary to true");
  				}
 
  			}
@@ -801,7 +801,7 @@
 					if(timeClock.getIsMidnight()) {
 						week.incrementDayOfWeek();
 						timeClock.setIsMidnight(false);
-						System.out.println("Incremented day of week");
+					//	System.out.println("Incremented day of week");
 					}
 					dateF.setText(week.getDayOfWeek());
  					timeF.setText(timeClock.getHour() + ":" + String.format("%02d",timeClock.getMinute()) + ":" + String.format("%02d",timeClock.getSecond()));
@@ -811,8 +811,8 @@
 					if(timeClock.getIsMidnight()) {
 						week.incrementDayOfWeek();
 						timeClock.setIsMidnight(false);
-						System.out.println(timeClock.getIsMidnight());
-						System.out.println("Incremented day of week");
+					//	System.out.println(timeClock.getIsMidnight());
+					//	System.out.println("Incremented day of week");
 					}
 					dateF.setText(week.getDayOfWeek());
  					// if pm
