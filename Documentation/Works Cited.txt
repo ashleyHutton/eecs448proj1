@@ -1,0 +1,5 @@
+Works Cited
+
+-Nearly all of our work was created originally, however, we used this video initially
+to help us set up our GUI using Java Swing.
+https://www.youtube.com/watch?v=wznbvBuf8ys
